@@ -7,3 +7,7 @@ at least two tests that passes for each corresponding.
 
 TestED is developed as a project in the course "CDT412 - Software Engineering
 Project" at Mälardalen University in Sweden.
+
+License
+-------
+Under evaluation. GPL or EPL.
