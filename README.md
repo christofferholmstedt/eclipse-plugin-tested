@@ -10,4 +10,9 @@ Project" at Mälardalen University in Sweden.
 
 License
 -------
-Under evaluation. GPL or EPL.
+Eclipse Public License - v 1.0
+
+Full license available at http://www.eclipse.org/legal/epl-v10.html or in the accompanying file "LICENSE".
+
+
+
