@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="se.chho.tested.examples.ListAllMethodsHandler"
+            id="se.chho.tested.listallmethods"
+            name="List All Methods">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.jdt.ui.PackageExplorer?after=additions">
+         <command
+               commandId="se.chho.tested.listallmethods"
+               label="List All Methods"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
 
 </plugin>
