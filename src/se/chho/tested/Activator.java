@@ -1,4 +1,4 @@
-package se.chho.eclipse.plugin.tested;
+package se.chho.tested;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -9,7 +9,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "se.chho.eclipse.plugin.tested"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "se.chho.tested"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;
