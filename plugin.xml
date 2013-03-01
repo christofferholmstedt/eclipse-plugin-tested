@@ -13,12 +13,20 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
-            locationURI="popup:org.eclipse.jdt.ui.PackageExplorer?after=additions">
+            locationURI="popup:org.eclipse.jdt.ui.CompilationUnitEditor.EditorContext?after=additions">
+         <separator
+               name="se.chho.tested.separator1"
+               visible="true">
+         </separator>
          <command
                commandId="se.chho.tested.listallmethods"
                label="List All Methods"
                style="push">
          </command>
+         <separator
+               name="se.chho.tested.separator2"
+               visible="true">
+         </separator>
       </menuContribution>
    </extension>
 
