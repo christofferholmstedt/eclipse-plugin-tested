@@ -22,8 +22,8 @@ were the user clicks with the mouse. Menus will only be available when right-
 clicking in the package explorer on Java files and "inside" Java files.
 
 Functionality needed
-    1. Identify the package name of the package which the user has "active"
-    2. Find all tests in that package
-    3. Find all methods that are invoked by the tests found in step 2
-    4. Mark invoked methods with a green marker
-    5. Mark non-invoked methods with a red marker
+1. Identify the package name of the package which the user has "active"
+2. Find all tests in that package
+3. Find all methods that are invoked by the tests found in step 2
+4. Mark invoked methods with a green marker
+5. Mark non-invoked methods with a red marker
