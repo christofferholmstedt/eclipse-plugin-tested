@@ -23,6 +23,7 @@ public class ListAllMethodsVisitor extends ASTVisitor {
 		  }
 		  else
 		  {
+			  System.out.println("*Visitor.java: " + node.getName());
 			  otherMethods.add(node);
 		  }
 	    return super.visit(node);

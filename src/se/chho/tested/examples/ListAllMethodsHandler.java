@@ -103,29 +103,48 @@ public class ListAllMethodsHandler extends AbstractHandler {
 	  private void createAST(IPackageFragment tempPackage)
 	      throws JavaModelException {
 	    
-		  // For each source file 
+		  // For each source file  accept visitor
 		  for (ICompilationUnit unit : tempPackage.getCompilationUnits()) {
 			  CompilationUnit tempCompilationUnit = parseCompilationUnit(unit);
 			  ListAllMethodsVisitor visitor = new ListAllMethodsVisitor();
 			  
 			  tempCompilationUnit.accept(visitor);
-			
+			  List<MethodDeclaration> otherMethods = visitor.getOtherMethods();
+			  for (MethodDeclaration otherMethod : otherMethods)
+			  {
+				  System.out.println("Pattern: " + otherMethod.getName().getIdentifier());
+			  }
 			  // Get all tests in the selected package
-			  for (MethodDeclaration method : visitor.getTestMethods()) {		 
-			    
-					  System.out.println("Method name: \"" + method.getName());
+			  for (MethodDeclaration method : visitor.getTestMethods()) {
+				  	System.out.println("----- New test method -----");
+					  System.out.println("Method name: " + method.getName());
 					  List<Statement> rows = new ArrayList<Statement>();
 					  rows = method.getBody().statements();
+					 
 					  
 					  // Prints all rows in all test methods
 					  // TODO: parse out all method calls.
 					  // TODO: Must be some better way to identify method calls?
-					  /*for (Statement row: rows) 
+					  for (Statement row: rows) 
 					  {
-					  		// For each statement regexp match against visitor.otherMethods()
+						  System.out.println("----- New row -----");
+						  System.out.println("Statement=" + row);
+						  //for (MethodDeclaration otherMethod : otherMethods)
+						  for (int i = 1; i<5;i++)
+						  {
+							  System.out.println("----- New otherMethod -----");
+							  // System.out.println("Statement=" + row + " does it match=" + otherMethod.getName());
+							 /*
+							  if (method.getName().getIdentifier().matches(otherMethod.getName().getIdentifier()))
+							  {
+								  System.out.println("Statement:" + row + "Method: " + method.getName());
+							  }
+							  */
+						  }
+						  // For each statement regexp match against visitor.otherMethods()
 					  		// If otherMethods exists within statement remove it from visitor.otherMethods.
-						  System.out.println(row);
-					  }*/
+						  // System.out.println(row);
+					  }
 				  
 				  // TODO: What is bindings? Expensive when creating AST below but what does it give me?
 				  IMethodBinding bindings = method.resolveBinding();
