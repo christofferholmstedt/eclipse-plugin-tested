@@ -29,5 +29,13 @@
          </separator>
       </menuContribution>
    </extension>
+   <extension
+         id="org.eclipse.core.resources.problemmarker"
+         name="testProblemMarkerCHHO"
+         point="org.eclipse.core.resources.markers">
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
 
 </plugin>

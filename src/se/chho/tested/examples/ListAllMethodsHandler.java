@@ -7,6 +7,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -156,6 +157,20 @@ public class ListAllMethodsHandler extends AbstractHandler {
 		}
 	}
 
+	private static final String MARKER_TYPE = "com.chho.tested.goodfunction";
+	private void addMarker(IFile file, String message, int lineNumber, int severity) {
+	              try {
+	                        IMarker marker = file.createMarker(MARKER_TYPE);
+	                        marker.setAttribute(IMarker.MESSAGE, message);
+	                        marker.setAttribute(IMarker.SEVERITY, severity);
+	                        if (lineNumber == -1) {
+	                                  lineNumber = 1;
+	                        }
+	                        marker.setAttribute(IMarker.LINE_NUMBER, lineNumber);
+	              } catch (CoreException e) {
+	              }
+	}
+	
 	private static CompilationUnit parseCompilationUnit(ICompilationUnit tempCompilationUnit) {
 		// Updated to AST.JLS4
 		ASTParser parser = ASTParser.newParser(AST.JLS4);
