@@ -17,7 +17,6 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
-import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.IMethodBinding;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
@@ -138,8 +137,7 @@ public class ListAllMethodsHandler extends AbstractHandler {
 				{
 					// Trim the string for each statement otherwise
 					// newline will disturb the .matches() regex function.
-					String tempString = new String(st.toString());
-					tempString = tempString.trim();
+					String tempString = new String(st.toString().trim());
 					
 					// Pattern is any character in front and after the method name.
 					String pattern = ".*" + nonTestMethod.getName().getIdentifier() + ".*"; 
