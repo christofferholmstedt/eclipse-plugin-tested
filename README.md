@@ -27,3 +27,7 @@ Functionality needed
   3. Find all methods that are invoked by the tests found in step 2
   4. Mark invoked methods with a green marker
   5. Mark non-invoked methods with a red marker
+
+Functionality needed
+  1. Try to activate something when JUnit tests have finished.
+  2. Give some results back to the user.
