@@ -29,5 +29,5 @@ Functionality needed
   5. Mark non-invoked methods with a red marker
 
 Functionality needed
-  1. Try to activate something when JUnit tests have finished.
-  2. Give some results back to the user.
+  1. Run a method after each test is ran.
+  2. Run a method after all tests have finished.
