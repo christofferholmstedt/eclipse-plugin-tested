@@ -2,6 +2,7 @@ package se.chho.tested;
 
 import org.eclipse.jdt.junit.TestRunListener;
 import org.eclipse.jdt.junit.model.ITestCaseElement;
+import org.eclipse.jdt.junit.model.ITestElement;
 import org.eclipse.jdt.junit.model.ITestRunSession;
 
 /**
@@ -39,6 +40,11 @@ public class TestedTestRunListener extends TestRunListener {
 	@Override
     public void sessionFinished(ITestRunSession session)
 	{
+		ITestElement[] testCases = session.getChildren();
+		for (ITestElement testCase : testCases)
+		{
+			System.out.println(testCase.getTestResult(true) + " : " + testCase.getElapsedTimeInSeconds());
+		}
 		System.out.println("Session Finished.");
     }
 }

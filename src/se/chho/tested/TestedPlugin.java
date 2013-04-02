@@ -30,7 +30,7 @@ public class TestedPlugin extends Plugin {
 		plugin = this;
 		
 		// Adds a TestRunListener to my plugin
-		JUnitCore.addTestRunListener(new TestedTestRunListener()); 
+		// JUnitCore.addTestRunListener(new TestedTestRunListener()); 
 	}
 
 	/*
