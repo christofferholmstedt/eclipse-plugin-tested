@@ -22,8 +22,8 @@ a TestListener needs to be created as well as some basic functionaliy on how
 to work with test results/repots from JUnit.
 
 Functionality needed
-  1. Print something to console after each test is ran.
-  2. Print something to console after all tests have finished.
+  1. Print something to console after each test is ran. (done)
+  2. Print something to console after all tests have finished. (done)
   3. Find out how to work with JUnit test results.
 
 TODO #1
