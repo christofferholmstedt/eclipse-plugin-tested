@@ -2,7 +2,6 @@ package se.chho.tested;
 
 import org.osgi.framework.BundleContext;
 import org.eclipse.core.runtime.Plugin;
-import org.eclipse.jdt.junit.JUnitCore;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -30,6 +29,9 @@ public class TestedPlugin extends Plugin {
 		plugin = this;
 		
 		// Adds a TestRunListener to my plugin
+		// TODO: Dynamic loading of TestRunListener below doesn't work without adding
+		// org.eclipse.jdt.junit.testRunListeners as extension point and the TestedTestRunListener as class
+		// but having it as well as the extension points makes the TestedTestRunListener run twice.
 		// JUnitCore.addTestRunListener(new TestedTestRunListener()); 
 	}
 
