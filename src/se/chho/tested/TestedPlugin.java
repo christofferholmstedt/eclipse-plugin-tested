@@ -1,6 +1,5 @@
 package se.chho.tested;
 
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jdt.junit.JUnitCore;
@@ -8,19 +7,18 @@ import org.eclipse.jdt.junit.JUnitCore;
 /**
  * The activator class controls the plug-in life cycle
  */
-// public class Activator extends AbstractUIPlugin {
-public class Activator extends Plugin {
+public class TestedPlugin extends Plugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "se.chho.tested"; //$NON-NLS-1$
 
 	// The shared instance
-	private static Activator plugin;
+	private static TestedPlugin plugin;
 	
 	/**
 	 * The constructor
 	 */
-	public Activator() {
+	public TestedPlugin() {
 	}
 
 	/*
@@ -32,7 +30,7 @@ public class Activator extends Plugin {
 		plugin = this;
 		
 		// Adds a TestRunListener to my plugin
-		JUnitCore.addTestRunListener(new MyTestRunListener()); 
+		JUnitCore.addTestRunListener(new TestedTestRunListener()); 
 	}
 
 	/*
@@ -49,7 +47,7 @@ public class Activator extends Plugin {
 	 *
 	 * @return the shared instance
 	 */
-	public static Activator getDefault() {
+	public static TestedPlugin getDefault() {
 		return plugin;
 	}
 

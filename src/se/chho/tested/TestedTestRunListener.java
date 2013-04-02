@@ -1,6 +1,5 @@
 package se.chho.tested;
 
-import org.eclipse.jdt.junit.JUnitCore;
 import org.eclipse.jdt.junit.TestRunListener;
 import org.eclipse.jdt.junit.model.ITestCaseElement;
 import org.eclipse.jdt.junit.model.ITestRunSession;
@@ -12,9 +11,9 @@ import org.eclipse.jdt.junit.model.ITestRunSession;
  * @author Christoffer Holmstedt
  */
 
-public class MyTestRunListener extends TestRunListener {
+public class TestedTestRunListener extends TestRunListener {
 
-	public MyTestRunListener ()
+	public TestedTestRunListener ()
 	{
 		// Do Nothing in here.
 	}

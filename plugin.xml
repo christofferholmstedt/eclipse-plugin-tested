@@ -2,40 +2,9 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.commands">
-      <command
-            defaultHandler="se.chho.tested.examples.ListAllMethodsHandler"
-            id="se.chho.tested.listallmethods"
-            name="List All Methods">
-      </command>
+         point="org.eclipse.jdt.junit.testRunListeners">
+      <testRunListener
+            class="se.chho.tested.TestedTestRunListener">
+      </testRunListener>
    </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            allPopups="false"
-            locationURI="popup:org.eclipse.jdt.ui.CompilationUnitEditor.EditorContext?after=additions">
-         <separator
-               name="se.chho.tested.separator1"
-               visible="true">
-         </separator>
-         <command
-               commandId="se.chho.tested.listallmethods"
-               label="List All Methods"
-               style="push">
-         </command>
-         <separator
-               name="se.chho.tested.separator2"
-               visible="true">
-         </separator>
-      </menuContribution>
-   </extension>
-   <extension
-         id="org.eclipse.core.resources.problemmarker"
-         name="testProblemMarkerCHHO"
-         point="org.eclipse.core.resources.markers">
-      <persistent
-            value="true">
-      </persistent>
-   </extension>
-
 </plugin>
