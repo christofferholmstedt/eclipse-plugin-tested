@@ -61,11 +61,6 @@ public class FindInvokedMethods {
 		  {
 			  searchFor(method, scope);
 		  }
-		  
-		  for (SearchMatch match : this.matches)
-		  {
-			  System.out.println(match.getOffset() + " " + match.getLength() + " " + match.getResource());
-		  }
      }
 	
 	/**

@@ -53,7 +53,7 @@ public class TestedTestRunListener extends TestRunListener {
 	{
 		FindInvokedMethods analyser = new FindInvokedMethods(passedTests, session.getLaunchedProject());
 		analyser.run();
-		System.out.println("================");
+		System.out.println("----- Session Finished -----");
 		// Wipe storage between JUnit runs.
 		passedTests.clear();
 		failedTests.clear();
