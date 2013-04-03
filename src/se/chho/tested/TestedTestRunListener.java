@@ -1,5 +1,8 @@
 package se.chho.tested;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.junit.TestRunListener;
 import org.eclipse.jdt.junit.model.ITestCaseElement;
@@ -16,8 +19,8 @@ import org.eclipse.jdt.junit.model.ITestElement.Result;
 
 public class TestedTestRunListener extends TestRunListener {
 
-	public String[] passedTests;
-	public String[] failedTests; // If not passed they fail.
+	ArrayList<String> passedTests = new ArrayList<String>();
+	ArrayList<String> failedTests = new ArrayList<String>(); // If not passed they fail.
 	
 	public TestedTestRunListener ()
 	{
@@ -26,51 +29,39 @@ public class TestedTestRunListener extends TestRunListener {
 	
 	@Override
     public void sessionStarted(ITestRunSession session) {
-		System.out.println("Session Started.");
+		System.out.println("----- Session Started -----");
     }
 	
 	@Override
 	public void testCaseStarted(ITestCaseElement testCaseElement)
 	{
-		String methodName = testCaseElement.getTestMethodName();
-		String progress = testCaseElement.getProgressState().toString();
-		System.out.println("Test Case Started: " + methodName + " : " + progress);
+		// Do Nothing in here.
 	}
 	
 	@Override
     public void testCaseFinished(ITestCaseElement testCaseElement)
 	{
 		String methodName = testCaseElement.getTestMethodName();
-		String progress = testCaseElement.getProgressState().toString();
 		if (testCaseElement.getTestResult(false) == Result.OK)
 		{
-			
+			passedTests.add(methodName);
 		}
 		else
 		{
-			
+			failedTests.add(methodName);
 		}
-		System.out.println("Test Case Finished: " + methodName + " : " + progress);
     }
 	
 	@Override
     public void sessionFinished(ITestRunSession session)
 	{
-		String testName = session.getTestRunName();
+		for (String test : passedTests)
+		{
+			System.out.println(test);
+		}
 		
-		try 
-		{
-			System.out.println(session.getLaunchedProject().getPackageFragmentRoots());
-		}
-		catch (JavaModelException e)
-		{
-			// Do Nothing
-		}
-		ITestElement[] testElements = session.getChildren();
-		for (ITestElement element : testElements)
-		{
-			System.out.println(testName + ": " + element.getTestResult(false) + " : " + element.getElapsedTimeInSeconds());
-		}
-		System.out.println("Session Finished.");
+		// Wipe storage between JUnit runs.
+		passedTests.clear();
+		failedTests.clear();
     }
 }
