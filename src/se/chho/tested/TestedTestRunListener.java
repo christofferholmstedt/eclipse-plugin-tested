@@ -16,8 +16,8 @@ import org.eclipse.jdt.junit.model.ITestElement.Result;
 
 public class TestedTestRunListener extends TestRunListener {
 
-	ArrayList<String> passedTests = new ArrayList<String>();
-	ArrayList<String> failedTests = new ArrayList<String>(); // If not passed they fail.
+	private ArrayList<ITestCaseElement> passedTests = new ArrayList<ITestCaseElement>();
+	private ArrayList<ITestCaseElement> failedTests = new ArrayList<ITestCaseElement>(); // If not passed they fail.
 	
 	public TestedTestRunListener ()
 	{
@@ -38,25 +38,22 @@ public class TestedTestRunListener extends TestRunListener {
 	@Override
     public void testCaseFinished(ITestCaseElement testCaseElement)
 	{
-		String methodName = testCaseElement.getTestMethodName();
 		if (testCaseElement.getTestResult(false) == Result.OK)
 		{
-			passedTests.add(methodName);
+			passedTests.add(testCaseElement);
 		}
 		else
 		{
-			failedTests.add(methodName);
+			failedTests.add(testCaseElement);
 		}
     }
 	
 	@Override
     public void sessionFinished(ITestRunSession session)
 	{
-		for (String test : passedTests)
-		{
-			System.out.println(test);
-		}
-		
+		FindInvokedMethods analyser = new FindInvokedMethods(passedTests, session.getLaunchedProject());
+		analyser.run();
+		System.out.println("================");
 		// Wipe storage between JUnit runs.
 		passedTests.clear();
 		failedTests.clear();
