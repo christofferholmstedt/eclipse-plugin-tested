@@ -25,6 +25,9 @@ Functionality needed
   1. Print something to console after each test is ran. (done)
   2. Print something to console after all tests have finished. (done)
   3. Find out how to work with JUnit test results.
+  4. Combining JUnit test results with the java project interface e.g. add
+     markers. Some help may be found at
+http://www.java2v.com/Open-Source/Java-Document/IDE-Eclipse/jdt/org/eclipse/jdt/junit/tests/TestRunListeners.java.htm
 
 TODO #1
 -------
