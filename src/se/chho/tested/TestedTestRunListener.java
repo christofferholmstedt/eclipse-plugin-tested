@@ -1,9 +1,11 @@
 package se.chho.tested;
 
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.junit.TestRunListener;
 import org.eclipse.jdt.junit.model.ITestCaseElement;
 import org.eclipse.jdt.junit.model.ITestElement;
 import org.eclipse.jdt.junit.model.ITestRunSession;
+import org.eclipse.jdt.junit.model.ITestElement.Result;
 
 /**
  * Inspiration form Brett Daniel 
@@ -14,6 +16,9 @@ import org.eclipse.jdt.junit.model.ITestRunSession;
 
 public class TestedTestRunListener extends TestRunListener {
 
+	public String[] passedTests;
+	public String[] failedTests; // If not passed they fail.
+	
 	public TestedTestRunListener ()
 	{
 		// Do Nothing in here.
@@ -27,23 +32,44 @@ public class TestedTestRunListener extends TestRunListener {
 	@Override
 	public void testCaseStarted(ITestCaseElement testCaseElement)
 	{
-		System.out.println(testCaseElement.getProgressState());
-		System.out.println("Test Case Started.");
+		String methodName = testCaseElement.getTestMethodName();
+		String progress = testCaseElement.getProgressState().toString();
+		System.out.println("Test Case Started: " + methodName + " : " + progress);
 	}
 	
 	@Override
     public void testCaseFinished(ITestCaseElement testCaseElement)
 	{
-		System.out.println("Test Case Finished.");
+		String methodName = testCaseElement.getTestMethodName();
+		String progress = testCaseElement.getProgressState().toString();
+		if (testCaseElement.getTestResult(false) == Result.OK)
+		{
+			
+		}
+		else
+		{
+			
+		}
+		System.out.println("Test Case Finished: " + methodName + " : " + progress);
     }
 	
 	@Override
     public void sessionFinished(ITestRunSession session)
 	{
-		ITestElement[] testCases = session.getChildren();
-		for (ITestElement testCase : testCases)
+		String testName = session.getTestRunName();
+		
+		try 
 		{
-			System.out.println(testCase.getTestResult(true) + " : " + testCase.getElapsedTimeInSeconds());
+			System.out.println(session.getLaunchedProject().getPackageFragmentRoots());
+		}
+		catch (JavaModelException e)
+		{
+			// Do Nothing
+		}
+		ITestElement[] testElements = session.getChildren();
+		for (ITestElement element : testElements)
+		{
+			System.out.println(testName + ": " + element.getTestResult(false) + " : " + element.getElapsedTimeInSeconds());
 		}
 		System.out.println("Session Finished.");
     }
