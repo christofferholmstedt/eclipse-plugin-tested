@@ -35,6 +35,7 @@ public class FindInvokedMethods {
 	// Collect all (.*)Test.java files in this ArrayList
 	private ArrayList<ICompilationUnit> searchInCompUnits = new ArrayList<ICompilationUnit>();
 	private ArrayList<IMethod> searchForMethods = new ArrayList<IMethod>();
+	private ArrayList<SearchMatch> matches;
 	
 	public FindInvokedMethods (ArrayList<ITestCaseElement> passedTests, IJavaProject activeJavaProject)
 	{
@@ -60,16 +61,11 @@ public class FindInvokedMethods {
 		  {
 			  searchFor(method, scope);
 		  }
-        /**
-		 * Some example code to fetch testMethodNames.
-		 *
-			int n=1;
-			for (ITestCaseElement element : this.passedTests)
-			{
-				System.out.println("Test " + n + ": " + element.getTestMethodName());
-				n++;
-			}
-		*/
+		  
+		  for (SearchMatch match : this.matches)
+		  {
+			  System.out.println(match.getOffset() + " " + match.getLength() + " " + match.getResource());
+		  }
      }
 	
 	/**
@@ -112,7 +108,10 @@ public class FindInvokedMethods {
 	    try{
 	        searchEngine.search(pattern, new SearchParticipant[] {SearchEngine.getDefaultSearchParticipant()}, scope, requestor, null);
 	        
-	        System.out.println(requestor.getMatches().toString());
+	        if (this.matches == null)
+	        	this.matches = requestor.getMatches();
+	        else
+	        	this.matches.addAll(requestor.getMatches());
 	    }catch(CoreException e){
 	        e.printStackTrace();
 	    }
