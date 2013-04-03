@@ -1,12 +1,9 @@
 package se.chho.tested;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.junit.TestRunListener;
 import org.eclipse.jdt.junit.model.ITestCaseElement;
-import org.eclipse.jdt.junit.model.ITestElement;
 import org.eclipse.jdt.junit.model.ITestRunSession;
 import org.eclipse.jdt.junit.model.ITestElement.Result;
 
