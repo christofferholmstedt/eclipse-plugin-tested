@@ -24,8 +24,11 @@ to work with test results/repots from JUnit.
 Functionality needed
   1. Print something to console after each test is ran. (done)
   2. Print something to console after all tests have finished. (done)
-  3. Find out how to work with JUnit test results.
-  4. Combining JUnit test results with the java project interface e.g. add
+  3. Find out how to work with JUnit test results. (done)
+  4. Modify TestedSearchRequestor to count how many times each method that is
+     run within test methods that passes. If this count is equal to two or
+higher add marker to method.
+  5. Combining JUnit test results with the java project interface e.g. add
      markers. Some help may be found at
 http://www.java2v.com/Open-Source/Java-Document/IDE-Eclipse/jdt/org/eclipse/jdt/junit/tests/TestRunListeners.java.htm
 
