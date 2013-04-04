@@ -21,6 +21,9 @@ runs the tests created just recently. So to be able to plug-in to this process
 a TestListener needs to be created as well as some basic functionaliy on how
 to work with test results/repots from JUnit.
 
+Some targets: How many tests invoke each non test method? Where is it test and
+with which parameters?
+
 Functionality needed
   1. Print something to console after each test is ran. (done)
   2. Print something to console after all tests have finished. (done)
