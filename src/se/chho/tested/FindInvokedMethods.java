@@ -1,6 +1,9 @@
 package se.chho.tested;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -28,6 +31,9 @@ import org.eclipse.jdt.junit.model.ITestCaseElement;
  *
  */
 public class FindInvokedMethods {
+	
+	// Search objects
+	private TestedSearchRequestor requestor = new TestedSearchRequestor();
 
 	private ArrayList<ITestCaseElement> passedTests = new ArrayList<ITestCaseElement>();
 	private IJavaProject activeJavaProject;
@@ -36,6 +42,8 @@ public class FindInvokedMethods {
 	private ArrayList<ICompilationUnit> searchInCompUnits = new ArrayList<ICompilationUnit>();
 	private ArrayList<IMethod> searchForMethods = new ArrayList<IMethod>();
 	private ArrayList<SearchMatch> matches;
+	
+	private Map<String,Integer> invokedMethodsCounter = new HashMap<String,Integer>();
 	
 	public FindInvokedMethods (ArrayList<ITestCaseElement> passedTests, IJavaProject activeJavaProject)
 	{
@@ -61,6 +69,14 @@ public class FindInvokedMethods {
 		  {
 			  searchFor(method, scope);
 		  }
+		  
+		  invokedMethodsCounter = this.requestor.getCounter();
+		  for (Entry<String, Integer> entry : invokedMethodsCounter.entrySet())
+		  {
+		      System.out.println(entry.getKey() + "/" + entry.getValue());
+		  }
+
+
      }
 	
 	/**
@@ -97,16 +113,15 @@ public class FindInvokedMethods {
 	 * @param elem
 	 */
 	public void searchFor(IJavaElement elem, IJavaSearchScope scope){
-	    TestedSearchRequestor requestor = new TestedSearchRequestor();
 	    SearchPattern pattern = SearchPattern.createPattern(elem, IJavaSearchConstants.REFERENCES);
 	    SearchEngine searchEngine = new SearchEngine();
 	    try{
 	        searchEngine.search(pattern, new SearchParticipant[] {SearchEngine.getDefaultSearchParticipant()}, scope, requestor, null);
 	        
 	        if (this.matches == null)
-	        	this.matches = requestor.getMatches();
+	        	this.matches = this.requestor.getMatches();
 	        else
-	        	this.matches.addAll(requestor.getMatches());
+	        	this.matches.addAll(this.requestor.getMatches());
 	    }catch(CoreException e){
 	        e.printStackTrace();
 	    }
