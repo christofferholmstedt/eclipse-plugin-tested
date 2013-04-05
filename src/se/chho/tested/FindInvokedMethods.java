@@ -40,7 +40,8 @@ public class FindInvokedMethods {
 	
 	// Collect all (.*)Test.java files in this ArrayList
 	private ArrayList<ICompilationUnit> searchInCompUnits = new ArrayList<ICompilationUnit>();
-	private ArrayList<IMethod> searchForMethods = new ArrayList<IMethod>();
+	private ArrayList<IMethod> nonTestMethods = new ArrayList<IMethod>();
+	private ArrayList<IMethod> testMethods = new ArrayList<IMethod>();
 	private ArrayList<SearchMatch> matches;
 	
 	private Map<String,Integer> invokedMethodsCounter = new HashMap<String,Integer>();
@@ -61,22 +62,30 @@ public class FindInvokedMethods {
 		}
 		
 		  // Step 1: Prepare search scope
-		  IJavaElement[] elems = new IJavaElement[this.searchInCompUnits.size()];
-		  elems =  this.searchInCompUnits.toArray(elems);
-		  IJavaSearchScope scope = SearchEngine.createJavaSearchScope(elems);
+//		  IJavaElement[] elems = new IJavaElement[this.searchInCompUnits.size()];
+//		  elems =  this.searchInCompUnits.toArray(elems);
+//		  IJavaSearchScope scope = SearchEngine.createJavaSearchScope(elems);
 		  
-		  for (IMethod method : this.searchForMethods)
+		  // For each non test method, find if it's invoked in each test method one by one.
+		  for (IMethod nonTestMethod : this.nonTestMethods)
 		  {
-			  searchFor(method, scope);
+			  for (IMethod testMethod : this.testMethods)
+			  {
+				  // searchFor(nonTestMethod, scope);
+				  IJavaElement[] elems = new IJavaElement[1];
+				  elems[0] = (IJavaElement)testMethod;
+				  IJavaSearchScope scopeTestMethod = SearchEngine.createJavaSearchScope(elems);
+				  searchFor(nonTestMethod, scopeTestMethod);
+				  System.out.println(nonTestMethod.getElementName() + " found in " + testMethod.getElementName() + ": " + this.requestor.getCounter() + " times.");
+				  this.requestor.resetCounter();
+			  }
 		  }
 		  
-		  invokedMethodsCounter = this.requestor.getCounter();
-		  for (Entry<String, Integer> entry : invokedMethodsCounter.entrySet())
-		  {
-		      System.out.println(entry.getKey() + "/" + entry.getValue());
-		  }
-
-
+//		  invokedMethodsCounter = this.requestor.getInvokedMethodsCounter();
+//		  for (Entry<String, Integer> entry : invokedMethodsCounter.entrySet())
+//		  {
+//		      System.out.println(entry.getKey() + "/" + entry.getValue());
+//		  }
      }
 	
 	/**
@@ -93,12 +102,19 @@ public class FindInvokedMethods {
 	            	if (unit.getElementName().matches("(.)*Test.java"))
         			{
 	            		this.searchInCompUnits.add(unit);
+	            	
+	            		// If Compilation Unit is test file/class/unit then add all methods to testMethod Arraylist.
+	            		for(IType type : unit.getTypes()){
+    	                    for(IMethod method : type.getMethods()){
+    	                    	this.testMethods.add(method);
+    	                    }
+    	                }
         			} else 
         			{
-        				// If Compilation Unit is not test file/class/unit then add all methods to elements to search for.
+        				// If Compilation Unit is not test file/class/unit then add all methods to nonTestMethod Arraylist.
         				for(IType type : unit.getTypes()){
     	                    for(IMethod method : type.getMethods()){
-    	                    	this.searchForMethods.add(method);
+    	                    	this.nonTestMethods.add(method);
     	                    }
     	                }
         			}
