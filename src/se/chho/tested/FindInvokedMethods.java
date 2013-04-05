@@ -1,9 +1,9 @@
 package se.chho.tested;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+//import java.util.ArrayList;
+//import java.util.HashMap;
+//import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -20,7 +20,6 @@ import org.eclipse.jdt.core.search.SearchEngine;
 import org.eclipse.jdt.core.search.SearchMatch;
 import org.eclipse.jdt.core.search.SearchParticipant;
 import org.eclipse.jdt.core.search.SearchPattern;
-import org.eclipse.jdt.core.search.SearchRequestor;
 import org.eclipse.jdt.junit.model.ITestCaseElement;
 
 /**
@@ -44,8 +43,6 @@ public class FindInvokedMethods {
 	private ArrayList<IMethod> testMethods = new ArrayList<IMethod>();
 	private ArrayList<SearchMatch> matches;
 	
-	private Map<String,Integer> invokedMethodsCounter = new HashMap<String,Integer>();
-	
 	public FindInvokedMethods (ArrayList<ITestCaseElement> passedTests, IJavaProject activeJavaProject)
 	{
 		this.passedTests = passedTests;
@@ -60,32 +57,19 @@ public class FindInvokedMethods {
 		{
 			// Pass
 		}
-		
-		  // Step 1: Prepare search scope
-//		  IJavaElement[] elems = new IJavaElement[this.searchInCompUnits.size()];
-//		  elems =  this.searchInCompUnits.toArray(elems);
-//		  IJavaSearchScope scope = SearchEngine.createJavaSearchScope(elems);
 		  
 		  // For each non test method, find if it's invoked in each test method one by one.
 		  for (IMethod nonTestMethod : this.nonTestMethods)
 		  {
 			  for (IMethod testMethod : this.testMethods)
 			  {
-				  // searchFor(nonTestMethod, scope);
-				  IJavaElement[] elems = new IJavaElement[1];
-				  elems[0] = (IJavaElement)testMethod;
-				  IJavaSearchScope scopeTestMethod = SearchEngine.createJavaSearchScope(elems);
-				  searchFor(nonTestMethod, scopeTestMethod);
+				  IJavaSearchScope scope = SearchEngine.createJavaSearchScope(new IJavaElement[] {testMethod});
+				  searchFor(nonTestMethod, scope);
+				  
 				  System.out.println(nonTestMethod.getElementName() + " found in " + testMethod.getElementName() + ": " + this.requestor.getCounter() + " times.");
 				  this.requestor.resetCounter();
 			  }
 		  }
-		  
-//		  invokedMethodsCounter = this.requestor.getInvokedMethodsCounter();
-//		  for (Entry<String, Integer> entry : invokedMethodsCounter.entrySet())
-//		  {
-//		      System.out.println(entry.getKey() + "/" + entry.getValue());
-//		  }
      }
 	
 	/**
@@ -133,11 +117,6 @@ public class FindInvokedMethods {
 	    SearchEngine searchEngine = new SearchEngine();
 	    try{
 	        searchEngine.search(pattern, new SearchParticipant[] {SearchEngine.getDefaultSearchParticipant()}, scope, requestor, null);
-	        
-	        if (this.matches == null)
-	        	this.matches = this.requestor.getMatches();
-	        else
-	        	this.matches.addAll(this.requestor.getMatches());
 	    }catch(CoreException e){
 	        e.printStackTrace();
 	    }
