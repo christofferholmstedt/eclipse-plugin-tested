@@ -41,6 +41,7 @@ public class FindInvokedMethods {
 	private ArrayList<ICompilationUnit> searchInCompUnits = new ArrayList<ICompilationUnit>();
 	private ArrayList<IMethod> nonTestMethods = new ArrayList<IMethod>();
 	private ArrayList<IMethod> testMethods = new ArrayList<IMethod>();
+	private ArrayList<FoundMethod> foundMethods = new ArrayList<FoundMethod>();
 	
 	public FindInvokedMethods (ArrayList<ITestCaseElement> passedTests, IJavaProject activeJavaProject)
 	{
@@ -65,6 +66,11 @@ public class FindInvokedMethods {
 				  IJavaSearchScope scope = SearchEngine.createJavaSearchScope(new IJavaElement[] {testMethod});
 				  searchFor(nonTestMethod, scope);
 				  
+//				  if (foundMethods.contains(testMethod))
+//				  {
+//					  FoundMethod found = foundMethods.get(foundMethods.indexOf(testMethod));
+//					  found.addMatch(testMethod);
+//				  }
 				  System.out.println(nonTestMethod.getElementName() + " found in " + testMethod.getElementName() + ": " + this.requestor.getCounter() + " times.");
 				  this.requestor.resetCounter();
 			  }
