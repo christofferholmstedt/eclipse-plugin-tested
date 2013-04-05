@@ -41,7 +41,6 @@ public class FindInvokedMethods {
 	private ArrayList<ICompilationUnit> searchInCompUnits = new ArrayList<ICompilationUnit>();
 	private ArrayList<IMethod> nonTestMethods = new ArrayList<IMethod>();
 	private ArrayList<IMethod> testMethods = new ArrayList<IMethod>();
-	private ArrayList<SearchMatch> matches;
 	
 	public FindInvokedMethods (ArrayList<ITestCaseElement> passedTests, IJavaProject activeJavaProject)
 	{
