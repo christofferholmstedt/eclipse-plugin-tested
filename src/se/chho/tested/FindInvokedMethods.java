@@ -5,6 +5,8 @@ import java.util.ArrayList;
 //import java.util.HashMap;
 //import java.util.Map;
 
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
@@ -79,6 +81,19 @@ public class FindInvokedMethods {
 		  for (FoundMethod f : foundMethods)
 		  {
 			  System.out.println(f.isInvokedByMoreThanTwoTests() + " " + f.getName() + " found in " + f.getDiffTestMethods() + " different test functions.");
+			  
+			  // TODO: Figure out how to show marker for all methods
+//			  if (f.isInvokedByMoreThanTwoTests())
+//			  {
+//				  IResource m = (IResource)f.getMethod();
+//				  try {
+//					  IMarker marker = m.createMarker(IMarker.LINE_NUMBER);
+//					  marker
+//				  } catch (Exception e)
+//				  {
+//					  // Do Nothing
+//				  }
+//			  }
 		  }
      }
 	

@@ -24,6 +24,11 @@ public class FoundMethod {
 		return this.method.getElementName();
 	}
 	
+	public IMethod getMethod()
+	{
+		return this.method;
+	}
+	
 	/**
 	 * @return the diffTestMethods
 	 */
