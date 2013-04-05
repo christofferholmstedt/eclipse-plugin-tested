@@ -22,7 +22,7 @@ public class TestedSearchRequestor extends SearchRequestor {
 	    if(match.getAccuracy() == SearchMatch.A_ACCURATE);
 	    	this.counter++;
 	    	// TODO: prevMethod is broken, though the logic is also broken
-	    	// can't find what I match against in this object, only the containig element.
+	    	// can't find what I match against in this object, only the containing element.
 	    
 //	    	matches.add(match);
 	}

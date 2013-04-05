@@ -67,23 +67,18 @@ public class FindInvokedMethods {
 				  IJavaSearchScope scope = SearchEngine.createJavaSearchScope(new IJavaElement[] {testMethod});
 				  searchFor(nonTestMethod, scope);
 				  
-				  tempFoundMethod.addMatch(testMethod);
+				  tempFoundMethod.addMatch(testMethod, this.requestor.getCounter());
 				  
-//				  // TODO: Do I need this loop?
-//				  if (!foundMethods.contains(tempFoundMethod))
-//				  {
-//					  tempFoundMethod.addMatch(testMethod);
-//					  foundMethods.add(tempFoundMethod);
-//				  }
-//				  else
-//				  {
-//					  foundMethods.get(foundMethods.indexOf(tempFoundMethod));
-//				  }
-					  
-//				  System.out.println(nonTestMethod.getElementName() + " found in " + testMethod.getElementName() + ": " + this.requestor.getCounter() + " times.");
-//				  this.requestor.resetCounter();
+				  
+				  System.out.println(nonTestMethod.getElementName() + " found in " + testMethod.getElementName() + ": " + this.requestor.getCounter() + " times.");
+				  this.requestor.resetCounter();
 			  }
 			  foundMethods.add(tempFoundMethod);
+		  }
+		  
+		  for (FoundMethod f : foundMethods)
+		  {
+			  System.out.println(f.isInvokedByMoreThanTwoTests() + " " + f.getName() + " found in " + f.getDiffTestMethods() + " different test functions.");
 		  }
      }
 	

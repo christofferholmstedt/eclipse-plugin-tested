@@ -42,13 +42,14 @@ public class FoundMethod {
 			this.setInvokedByMoreThanTwoTests(false);
 	}
 
-	public void addMatch(IMethod testMethod)
+	public void addMatch(IMethod testMethod, int numberOfHits)
 	{
-		if(testMethods.containsKey(testMethod))
-			testMethods.put(testMethod, testMethods.get(testMethods)+1);
-		else
-			testMethods.put(testMethod, 1);
-			recountDiffTestMethods();
+			System.out.println(testMethod.getElementName() + " " + numberOfHits);
+			if (numberOfHits > 0)
+			{
+				testMethods.put(testMethod, numberOfHits);
+				recountDiffTestMethods();
+			}
 	}
 	
 	private void recountDiffTestMethods()
