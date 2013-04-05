@@ -61,19 +61,29 @@ public class FindInvokedMethods {
 		  // For each non test method, find if it's invoked in each test method one by one.
 		  for (IMethod nonTestMethod : this.nonTestMethods)
 		  {
+			  FoundMethod tempFoundMethod = new FoundMethod(nonTestMethod);
 			  for (IMethod testMethod : this.testMethods)
 			  {
 				  IJavaSearchScope scope = SearchEngine.createJavaSearchScope(new IJavaElement[] {testMethod});
 				  searchFor(nonTestMethod, scope);
 				  
-//				  if (foundMethods.contains(testMethod))
+				  tempFoundMethod.addMatch(testMethod);
+				  
+//				  // TODO: Do I need this loop?
+//				  if (!foundMethods.contains(tempFoundMethod))
 //				  {
-//					  FoundMethod found = foundMethods.get(foundMethods.indexOf(testMethod));
-//					  found.addMatch(testMethod);
+//					  tempFoundMethod.addMatch(testMethod);
+//					  foundMethods.add(tempFoundMethod);
 //				  }
-				  System.out.println(nonTestMethod.getElementName() + " found in " + testMethod.getElementName() + ": " + this.requestor.getCounter() + " times.");
-				  this.requestor.resetCounter();
+//				  else
+//				  {
+//					  foundMethods.get(foundMethods.indexOf(tempFoundMethod));
+//				  }
+					  
+//				  System.out.println(nonTestMethod.getElementName() + " found in " + testMethod.getElementName() + ": " + this.requestor.getCounter() + " times.");
+//				  this.requestor.resetCounter();
 			  }
+			  foundMethods.add(tempFoundMethod);
 		  }
      }
 	
