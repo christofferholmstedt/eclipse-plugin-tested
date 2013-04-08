@@ -72,7 +72,7 @@ public class FindInvokedMethods {
 				  tempFoundMethod.addMatch(testMethod, this.requestor.getCounter());
 				  
 				  
-				  System.out.println(nonTestMethod.getElementName() + " found in " + testMethod.getElementName() + ": " + this.requestor.getCounter() + " times.");
+				  // System.out.println(nonTestMethod.getElementName() + " found in " + testMethod.getElementName() + ": " + this.requestor.getCounter() + " times.");
 				  this.requestor.resetCounter();
 			  }
 			  foundMethods.add(tempFoundMethod);
@@ -80,8 +80,9 @@ public class FindInvokedMethods {
 		  
 		  for (FoundMethod f : foundMethods)
 		  {
-			  System.out.println(f.isInvokedByMoreThanTwoTests() + " " + f.getName() + " found in " + f.getDiffTestMethods() + " different test functions.");
-			  
+			  String newLine = System.getProperty("line.separator");
+			  System.out.println(f.getName() + " found in " + f.getDiffTestMethods() + " different test functions.");
+			  System.out.println("Is " + f.getName() + " found in more than 2 test methods? " + f.isInvokedByMoreThanTwoTests() + newLine);
 			  // TODO: Figure out how to show marker for all methods
 //			  if (f.isInvokedByMoreThanTwoTests())
 //			  {

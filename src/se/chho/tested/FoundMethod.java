@@ -49,7 +49,6 @@ public class FoundMethod {
 
 	public void addMatch(IMethod testMethod, int numberOfHits)
 	{
-			System.out.println(testMethod.getElementName() + " " + numberOfHits);
 			if (numberOfHits > 0)
 			{
 				testMethods.put(testMethod, numberOfHits);
