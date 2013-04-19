@@ -13,5 +13,5 @@
     <super type="org.eclipse.core.resources.problemmarker"/>
     <persistent value="false"/>
     <attribute name="description"/>
-</extension>
+    </extension>
 </plugin>

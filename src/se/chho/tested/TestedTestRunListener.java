@@ -1,11 +1,13 @@
 package se.chho.tested;
 
-import java.util.ArrayList;
-
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.junit.TestRunListener;
 import org.eclipse.jdt.junit.model.ITestCaseElement;
 import org.eclipse.jdt.junit.model.ITestRunSession;
 import org.eclipse.jdt.junit.model.ITestElement.Result;
+
+import se.chho.tested.helpers.MarkerHelper;
 
 /**
  * Inspiration form Brett Daniel 
@@ -25,7 +27,7 @@ public class TestedTestRunListener extends TestRunListener {
 	
 	@Override
     public void sessionStarted(ITestRunSession session) {
-		System.out.println("----- Session Started -----");
+		// Do Nothing in here.
     }
 	
 	@Override
@@ -46,12 +48,19 @@ public class TestedTestRunListener extends TestRunListener {
 	@Override
     public void sessionFinished(ITestRunSession session)
 	{
+		 
+		   try {
+			  IResource resource = session.getLaunchedProject().getCorrespondingResource();
+		      resource.deleteMarkers(MarkerHelper.PASSED_TEST_MARKER_ID, true, IResource.DEPTH_INFINITE);
+		      System.out.println("It Works");
+		   } catch (CoreException e) {
+		      // something went wrong
+		   }
+		// Run TestED plugin if all tests pass.
 		if (!this.atLeastOneTestFailed)
 		{
 			FindInvokedMethods findMethods = new FindInvokedMethods(session.getLaunchedProject());
 			findMethods.run();
 		}
-		System.out.println("----- Session Finished -----");
-		
     }
 }

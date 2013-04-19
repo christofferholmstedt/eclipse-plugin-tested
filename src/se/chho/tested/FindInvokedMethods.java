@@ -2,12 +2,9 @@ package se.chho.tested;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
-//import java.util.ArrayList;
-//import java.util.HashMap;
-//import java.util.Map;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
@@ -20,10 +17,9 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.search.IJavaSearchConstants;
 import org.eclipse.jdt.core.search.IJavaSearchScope;
 import org.eclipse.jdt.core.search.SearchEngine;
-import org.eclipse.jdt.core.search.SearchMatch;
 import org.eclipse.jdt.core.search.SearchParticipant;
 import org.eclipse.jdt.core.search.SearchPattern;
-import org.eclipse.jdt.junit.model.ITestCaseElement;
+import se.chho.tested.helpers.MarkerHelper;
 
 /**
  * This class goes through all test methods in given scope (usually a project not the 
@@ -62,25 +58,30 @@ public class FindInvokedMethods {
 	  
 		  for (FoundMethod foundMethod : foundMethods)
 		  {
-			  String newLine = System.getProperty("line.separator");
-			  System.out.println(foundMethod.getName() + " found in " + foundMethod.getDiffTestMethods() + " different test functions.");
-			  System.out.println("Is " + foundMethod.getName() + " found in more than 2 test methods? " + foundMethod.isInvokedByMoreThanTwoTests() + newLine);
-			  
 			  // TODO: Figure out how to show marker for all methods
 			  if (foundMethod.isInvokedByMoreThanTwoTests())
 			  {
-				
 				  try {
-					  IResource m = foundMethod.getMethod().getCompilationUnit().getCorrespondingResource();
-					  int linenumber = getMethodLineNumber(foundMethod.getMethod().getCompilationUnit(), foundMethod.getMethod());
-					  IMarker marker = m.createMarker(IMarker.PROBLEM);
-					  marker.setAttribute(IMarker.LINE_NUMBER, linenumber);
-				  } catch (Exception e)
-				  {
-					  System.out.println(" ============= error ============= ");
-					  System.out.println(foundMethod.isInvokedByMoreThanTwoTests());
-					  e.printStackTrace();
-				  }
+					IFile file = (IFile)foundMethod.getMethod().getCompilationUnit().getCorrespondingResource();
+					int linenumber = getMethodLineNumber(foundMethod.getMethod().getCompilationUnit(), foundMethod.getMethod());
+					String message = "Test Message " + foundMethod.getMethod().getElementName();
+					
+					// Delete similiar markers (?)
+					// Perhaps check if similiar marker already exists instead.
+					IMarker[] markers = MarkerHelper.findMarkersByLineNumber(file, linenumber, MarkerHelper.PASSED_TEST_MARKER_ID);
+					
+					for (IMarker marker : markers)
+					{
+						// TODO: If any marker has the same Message and linenumber delete it and add a new further down.
+					}
+					// Add new marker
+					MarkerHelper.addMarker(file, linenumber, message);
+					
+					
+				} catch (JavaModelException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			  }
 		  }
      }
