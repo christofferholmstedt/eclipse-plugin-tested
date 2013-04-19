@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
@@ -66,18 +65,9 @@ public class FindInvokedMethods {
 					int linenumber = getMethodLineNumber(foundMethod.getMethod().getCompilationUnit(), foundMethod.getMethod());
 					String message = "Test Message " + foundMethod.getMethod().getElementName();
 					
-					// Delete similiar markers (?)
-					// Perhaps check if similiar marker already exists instead.
-					IMarker[] markers = MarkerHelper.findMarkersByLineNumber(file, linenumber, MarkerHelper.PASSED_TEST_MARKER_ID);
-					
-					for (IMarker marker : markers)
-					{
-						// TODO: If any marker has the same Message and linenumber delete it and add a new further down.
-					}
 					// Add new marker
 					MarkerHelper.addMarker(file, linenumber, message);
-					
-					
+						
 				} catch (JavaModelException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
