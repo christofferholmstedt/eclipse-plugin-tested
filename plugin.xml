@@ -7,4 +7,11 @@
             class="se.chho.tested.TestedTestRunListener">
       </testRunListener>
    </extension>
+   <extension
+          point="org.eclipse.core.resources.markers" id="se.chho.marker.passedTest"
+          name="Passed test">
+    <super type="org.eclipse.core.resources.problemmarker"/>
+    <persistent value="false"/>
+    <attribute name="description"/>
+</extension>
 </plugin>

@@ -1,6 +1,7 @@
 package se.chho.tested;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 //import java.util.ArrayList;
 //import java.util.HashMap;
 //import java.util.Map;
@@ -35,8 +36,7 @@ public class FindInvokedMethods {
 	
 	// Search objects
 	private TestedSearchRequestor requestor = new TestedSearchRequestor();
-
-	private ArrayList<ITestCaseElement> passedTests = new ArrayList<ITestCaseElement>();
+	
 	private IJavaProject activeJavaProject;
 	
 	// Collect all (.*)Test.java files in this ArrayList
@@ -45,56 +45,67 @@ public class FindInvokedMethods {
 	private ArrayList<IMethod> testMethods = new ArrayList<IMethod>();
 	private ArrayList<FoundMethod> foundMethods = new ArrayList<FoundMethod>();
 	
-	public FindInvokedMethods (ArrayList<ITestCaseElement> passedTests, IJavaProject activeJavaProject)
+	public FindInvokedMethods (IJavaProject activeJavaProject)
 	{
-		this.passedTests = passedTests;
 		this.activeJavaProject = activeJavaProject;
 	}
 
 	public void run() {
 		try {
-			// Process project and populates local arraylists.
+			// Process project and populates local Arraylists.
 			processProject(activeJavaProject);
+			populateFoundMethods();
 		} catch (Exception e)
 		{
 			// Pass
 		}
+  
+		  // Test print out of this ArrayList
+//		  for (ITestCaseElement passed : this.passedTests)
+//		  {
+//			  System.out.println(passed.getTestMethodName());
+//		  }
 		  
-		  // For each non test method, find if it's invoked in each test method one by one.
-		  for (IMethod nonTestMethod : this.nonTestMethods)
+		  for (FoundMethod foundMethod : foundMethods)
 		  {
-			  FoundMethod tempFoundMethod = new FoundMethod(nonTestMethod);
-			  for (IMethod testMethod : this.testMethods)
+			  if (foundMethod.isInvokedByMoreThanTwoTests())
 			  {
-				  IJavaSearchScope scope = SearchEngine.createJavaSearchScope(new IJavaElement[] {testMethod});
-				  searchFor(nonTestMethod, scope);
 				  
-				  tempFoundMethod.addMatch(testMethod, this.requestor.getCounter());
-				  
-				  
-				  // System.out.println(nonTestMethod.getElementName() + " found in " + testMethod.getElementName() + ": " + this.requestor.getCounter() + " times.");
-				  this.requestor.resetCounter();
+//				try {		
+//					int linenumber = getMethodLineNumber(foundMethod.getMethod().getCompilationUnit(), foundMethod.getMethod());
+//					System.out.println("Line Number: " + linenumber);
+//					
+//					IMarker marker = foundMethod.getMethod().getCorrespondingResource().createMarker(IMarker.MARKER);
+//					marker.setAttribute(IMarker.LINE_NUMBER, linenumber);
+//					marker.setAttribute(IMarker.SEVERITY, IMarker.PRIORITY_NORMAL);
+//					marker.setAttribute("description", "test description");
+//					marker.setAttribute(IMarker.MESSAGE, "My marker message");
+//					
+//				} catch (JavaModelException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} catch (CoreException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 			  }
-			  foundMethods.add(tempFoundMethod);
-		  }
-		  
-		  for (FoundMethod f : foundMethods)
-		  {
 			  String newLine = System.getProperty("line.separator");
-			  System.out.println(f.getName() + " found in " + f.getDiffTestMethods() + " different test functions.");
-			  System.out.println("Is " + f.getName() + " found in more than 2 test methods? " + f.isInvokedByMoreThanTwoTests() + newLine);
+			  System.out.println(foundMethod.getName() + " found in " + foundMethod.getDiffTestMethods() + " different test functions.");
+			  System.out.println("Is " + foundMethod.getName() + " found in more than 2 test methods? " + foundMethod.isInvokedByMoreThanTwoTests() + newLine);
 			  // TODO: Figure out how to show marker for all methods
-//			  if (f.isInvokedByMoreThanTwoTests())
-//			  {
-//				  IResource m = (IResource)f.getMethod();
-//				  try {
-//					  IMarker marker = m.createMarker(IMarker.LINE_NUMBER);
-//					  marker
-//				  } catch (Exception e)
-//				  {
-//					  // Do Nothing
-//				  }
-//			  }
+			  if (foundMethod.isInvokedByMoreThanTwoTests())
+			  {
+				  try {
+					  IResource m = foundMethod.getMethod().getCorrespondingResource();
+					  int linenumber = getMethodLineNumber(foundMethod.getMethod().getCompilationUnit(), foundMethod.getMethod());
+					  IMarker marker = m.createMarker("org.eclipse.core.resources.problemmarker");
+					  marker.setAttribute(IMarker.LINE_NUMBER, linenumber);
+				  } catch (Exception e)
+				  {
+					  System.out.println(" ============= error ============= ");
+					  e.printStackTrace();
+				  }
+			  }
 		  }
      }
 	
@@ -103,7 +114,7 @@ public class FindInvokedMethods {
 	 * @param javaProject
 	 * @throws JavaModelException
 	 */
-	public void processProject(IJavaProject javaProject) throws JavaModelException{
+	private void processProject(IJavaProject javaProject) throws JavaModelException{
 	    for(IPackageFragment pkg : javaProject.getPackageFragments()){
 	        if(pkg.getKind() == IPackageFragmentRoot.K_SOURCE){
 	            for(ICompilationUnit unit : pkg.getCompilationUnits()){
@@ -146,5 +157,39 @@ public class FindInvokedMethods {
 	    }catch(CoreException e){
 	        e.printStackTrace();
 	    }
+	}
+	
+	/***
+	 * Source: http://stackoverflow.com/a/562298
+	 * @param type
+	 * @param method
+	 * @return
+	 * @throws JavaModelException
+	 */
+	private int getMethodLineNumber(final ICompilationUnit compUnit, IMethod method) throws JavaModelException {
+	    String source = compUnit.getSource();
+	    String sourceUpToMethod= source.substring(0, method.getSourceRange().getOffset());
+	    Pattern lineEnd= Pattern.compile("$", Pattern.MULTILINE | Pattern.DOTALL);
+	    return lineEnd.split(sourceUpToMethod).length;
+	}
+	
+	private void populateFoundMethods()
+	{
+		// For each non test method, find if it's invoked in each test method one by one.
+		  for (IMethod nonTestMethod : this.nonTestMethods)
+		  {
+			  FoundMethod tempFoundMethod = new FoundMethod(nonTestMethod);
+			  for (IMethod testMethod : this.testMethods)
+			  {
+				  IJavaSearchScope scope = SearchEngine.createJavaSearchScope(new IJavaElement[] {testMethod});
+				  searchFor(nonTestMethod, scope);
+				  
+				  tempFoundMethod.addMatch(testMethod, this.requestor.getCounter());
+				  
+				  // System.out.println(nonTestMethod.getElementName() + " found in " + testMethod.getElementName() + ": " + this.requestor.getCounter() + " times.");
+				  this.requestor.resetCounter();
+			  }
+			  foundMethods.add(tempFoundMethod);
+		  }
 	}
 }
