@@ -10,9 +10,6 @@ import org.eclipse.jdt.junit.model.ITestElement.Result;
 import se.chho.tested.helpers.MarkerHelper;
 
 /**
- * Inspiration form Brett Daniel 
- * http://www.brettdaniel.com/archives/2009/05/23/232945/
- *
  * @author Christoffer Holmstedt
  */
 
@@ -36,6 +33,14 @@ public class TestedTestRunListener extends TestRunListener {
 		// Do Nothing in here.
 	}
 	
+	/***
+	 * After each test case see if it failed, if it fails set 
+	 * this.allTestPassed to false to indicate that Tested Plugin should
+	 * not make any analysis yet.
+	 * 
+	 * See Github issue number 4.
+	 * https://github.com/christofferholmstedt/eclipse-plugin-tested/issues/4
+	 */
 	@Override
     public void testCaseFinished(ITestCaseElement testCaseElement)
 	{
@@ -45,6 +50,15 @@ public class TestedTestRunListener extends TestRunListener {
 		}
     }
 	
+	/***
+	 * When JUnit finishes all unit tests TestED Plugin is ran.
+	 * First all previous set problem markers are deleted and
+	 * then if all test have passed the plugin is started by instantiating
+	 * TestedMain calling its run() method.
+	 * 
+	 * See Github issue number 4.
+	 * https://github.com/christofferholmstedt/eclipse-plugin-tested/issues/4
+	 */
 	@Override
     public void sessionFinished(ITestRunSession session)
 	{
@@ -52,7 +66,6 @@ public class TestedTestRunListener extends TestRunListener {
 		   try {
 			  IResource resource = session.getLaunchedProject().getCorrespondingResource();
 		      resource.deleteMarkers(MarkerHelper.PASSED_TEST_MARKER_ID, true, IResource.DEPTH_INFINITE);
-		      System.out.println("It Works");
 		   } catch (CoreException e) {
 		      // something went wrong
 		   }
