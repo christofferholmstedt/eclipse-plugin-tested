@@ -7,6 +7,7 @@ import org.eclipse.jdt.junit.model.ITestCaseElement;
 import org.eclipse.jdt.junit.model.ITestRunSession;
 import org.eclipse.jdt.junit.model.ITestElement.Result;
 
+import se.chho.tested.core.TestedMain;
 import se.chho.tested.helpers.MarkerHelper;
 
 /**
