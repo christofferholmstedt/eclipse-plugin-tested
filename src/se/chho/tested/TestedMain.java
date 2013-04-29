@@ -27,7 +27,7 @@ import se.chho.tested.helpers.MarkerHelper;
  * @author Christoffer Holmstedt
  *
  */
-public class FindInvokedMethods {
+public class TestedMain {
 	
 	// Search objects
 	private TestedSearchRequestor requestor = new TestedSearchRequestor();
@@ -40,7 +40,7 @@ public class FindInvokedMethods {
 	private ArrayList<IMethod> testMethods = new ArrayList<IMethod>();
 	private ArrayList<FoundMethod> foundMethods = new ArrayList<FoundMethod>();
 	
-	public FindInvokedMethods (IJavaProject activeJavaProject)
+	public TestedMain (IJavaProject activeJavaProject)
 	{
 		this.activeJavaProject = activeJavaProject;
 	}

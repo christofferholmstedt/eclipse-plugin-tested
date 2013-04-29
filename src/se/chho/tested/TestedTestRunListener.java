@@ -18,7 +18,7 @@ import se.chho.tested.helpers.MarkerHelper;
 
 public class TestedTestRunListener extends TestRunListener {
 	
-	private boolean atLeastOneTestFailed = false;
+	private boolean allTestPassed = true;
 	
 	public TestedTestRunListener ()
 	{
@@ -41,7 +41,7 @@ public class TestedTestRunListener extends TestRunListener {
 	{
 		if (testCaseElement.getTestResult(false) != Result.OK)
 		{
-			this.atLeastOneTestFailed = true;
+			this.allTestPassed = false;
 		}
     }
 	
@@ -57,9 +57,9 @@ public class TestedTestRunListener extends TestRunListener {
 		      // something went wrong
 		   }
 		// Run TestED plugin if all tests pass.
-		if (!this.atLeastOneTestFailed)
+		if (this.allTestPassed)
 		{
-			FindInvokedMethods findMethods = new FindInvokedMethods(session.getLaunchedProject());
+			TestedMain findMethods = new TestedMain(session.getLaunchedProject());
 			findMethods.run();
 		}
     }
