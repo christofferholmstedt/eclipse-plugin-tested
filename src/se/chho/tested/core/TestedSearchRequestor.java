@@ -1,4 +1,4 @@
-package se.chho.tested;
+package se.chho.tested.core;
 
 //import java.util.ArrayList;
 //import java.util.HashMap;

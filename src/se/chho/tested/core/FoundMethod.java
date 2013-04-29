@@ -1,5 +1,6 @@
 package se.chho.tested.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -9,10 +10,22 @@ import org.eclipse.jdt.core.IMethod;
 public class FoundMethod {
 	
 	private IMethod method;
+	private ArrayList<MethodInvocation> invokedBy = new ArrayList<MethodInvocation>(); 
+	
 	// testMethods store counter how many times this.method has been found in IMethod testMethod.
 	private Map<IMethod,Integer> testMethods = new HashMap<IMethod,Integer>();
 	private int diffTestMethods = 0; // Number of different test methods this.method is called from.
 	private boolean invokedByMoreThanTwoTests = false;
+	
+	
+	public ArrayList<MethodInvocation> getMethodInvocations() {
+		return this.invokedBy;
+	}
+	
+	public void addMethodInvocation(MethodInvocation invoke)
+	{
+		this.invokedBy.add(invoke);
+	}
 	
 	public FoundMethod(IMethod method)	
 	{

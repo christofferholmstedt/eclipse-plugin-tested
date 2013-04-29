@@ -1,4 +1,4 @@
-package se.chho.tested.core;
+package se.chho.tested.analyser;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -19,11 +19,15 @@ import org.eclipse.jdt.core.search.SearchEngine;
 import org.eclipse.jdt.core.search.SearchParticipant;
 import org.eclipse.jdt.core.search.SearchPattern;
 
-import se.chho.tested.TestedSearchRequestor;
+import se.chho.tested.core.FoundMethod;
+import se.chho.tested.core.TestedSearchRequestor;
 import se.chho.tested.helpers.MarkerHelper;
 
-public class AnalyserManager implements AnalyserManagerObservable {
+public class AnalyserManager implements AnalyserManagerObservableInterface {
 
+	// Observers (Different analysers
+	private ArrayList<AnalyserObserverInterface> observers = new ArrayList<AnalyserObserverInterface>();
+	
 	// Search objects
 	private TestedSearchRequestor requestor = new TestedSearchRequestor();
 	
@@ -64,27 +68,27 @@ public class AnalyserManager implements AnalyserManagerObservable {
 	}
 	
 	@Override
-	public FoundMethod[] getFoundMethods() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<FoundMethod> getFoundMethods() {
+		return this.foundMethods;
 	}
 
 	@Override
-	public void attach(AnalyserObserver Observer) {
-		// TODO Auto-generated method stub
-		
+	public void attach(AnalyserObserverInterface Observer) {
+		this.observers.add(Observer);		
 	}
 
 	@Override
-	public void detach(AnalyserObserver Observer) {
-		// TODO Auto-generated method stub
-		
+	public void detach(AnalyserObserverInterface Observer) {
+		// TODO: Make sure this works.
+		this.observers.remove(Observer);
 	}
 
 	@Override
 	public void runAllAnalysers() {
-		// TODO Auto-generated method stub
-		
+		for (AnalyserObserverInterface observer : this.observers)
+		{
+			observer.runAnalysis(this);
+		}
 	}
 	
 	/**
