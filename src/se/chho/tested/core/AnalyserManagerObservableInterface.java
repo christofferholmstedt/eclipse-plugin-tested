@@ -1,8 +1,7 @@
-package se.chho.tested.analyser;
+package se.chho.tested.core;
 
 import java.util.ArrayList;
 
-import se.chho.tested.core.FoundMethod;
 
 public interface AnalyserManagerObservableInterface {
 	

@@ -1,4 +1,4 @@
-package se.chho.tested.analyser;
+package se.chho.tested.core;
 
 public interface AnalyserObserverInterface {
 	

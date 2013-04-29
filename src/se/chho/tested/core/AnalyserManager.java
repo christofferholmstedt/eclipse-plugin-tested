@@ -1,4 +1,4 @@
-package se.chho.tested.analyser;
+package se.chho.tested.core;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -19,8 +19,6 @@ import org.eclipse.jdt.core.search.SearchEngine;
 import org.eclipse.jdt.core.search.SearchParticipant;
 import org.eclipse.jdt.core.search.SearchPattern;
 
-import se.chho.tested.core.FoundMethod;
-import se.chho.tested.core.TestedSearchRequestor;
 import se.chho.tested.helpers.MarkerHelper;
 
 public class AnalyserManager implements AnalyserManagerObservableInterface {
