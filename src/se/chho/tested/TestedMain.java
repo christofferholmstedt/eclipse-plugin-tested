@@ -32,8 +32,6 @@ public class TestedMain {
 	// Search objects
 	private TestedSearchRequestor requestor = new TestedSearchRequestor();
 	
-	private IJavaProject activeJavaProject;
-	
 	// Collect all (.*)Test.java files in this ArrayList
 	private ArrayList<ICompilationUnit> searchInCompUnits = new ArrayList<ICompilationUnit>();
 	private ArrayList<IMethod> nonTestMethods = new ArrayList<IMethod>();
@@ -42,10 +40,7 @@ public class TestedMain {
 	
 	public TestedMain (IJavaProject activeJavaProject)
 	{
-		this.activeJavaProject = activeJavaProject;
-	}
 
-	public void run() {
 		try {
 			// Process project and populates local Arraylists.
 			processProject(activeJavaProject);
@@ -74,7 +69,7 @@ public class TestedMain {
 				}
 			  }
 		  }
-     }
+	}
 	
 	/**
 	 * Source: http://stackoverflow.com/questions/11321363/alternative-or-improvement-to-eclipse-jdt-searchengine

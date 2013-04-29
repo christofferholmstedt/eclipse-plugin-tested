@@ -51,10 +51,10 @@ public class TestedTestRunListener extends TestRunListener {
     }
 	
 	/***
-	 * When JUnit finishes all unit tests TestED Plugin is ran.
-	 * First all previous set problem markers are deleted and
-	 * then if all test have passed the plugin is started by instantiating
-	 * TestedMain calling its run() method.
+	 * When JUnit finishes all unit tests TestED Plugin is run.
+	 * First, all previous problem markers are deleted and
+	 * then if all test have passed Tested Plugin is run by
+	 * instantiating TestedMain.
 	 * 
 	 * See Github issue number 4.
 	 * https://github.com/christofferholmstedt/eclipse-plugin-tested/issues/4
@@ -69,11 +69,11 @@ public class TestedTestRunListener extends TestRunListener {
 		   } catch (CoreException e) {
 		      // something went wrong
 		   }
-		// Run TestED plugin if all tests pass.
+		   
 		if (this.allTestPassed)
 		{
-			TestedMain findMethods = new TestedMain(session.getLaunchedProject());
-			findMethods.run();
+			// By instantiating TestedMain the analyser is set up and all "analysers" are invoked.
+			new TestedMain(session.getLaunchedProject());
 		}
     }
 }
