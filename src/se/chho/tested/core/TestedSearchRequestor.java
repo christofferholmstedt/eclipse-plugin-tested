@@ -4,32 +4,37 @@ package se.chho.tested.core;
 //import java.util.HashMap;
 //import java.util.Map;
 
+import java.util.ArrayList;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.search.SearchMatch;
 import org.eclipse.jdt.core.search.SearchRequestor;
 
 public class TestedSearchRequestor extends SearchRequestor {
-//	private ArrayList<SearchMatch> matches;
+	private ArrayList<SearchMatch> matches;
 	private int counter = 0;
 	
 	public TestedSearchRequestor(){
 	    super();
-//	    matches = new ArrayList<SearchMatch>();
+	    this.matches = new ArrayList<SearchMatch>();
 	}
 	
 	@Override
 	public void acceptSearchMatch(SearchMatch match) throws CoreException {
 	    if(match.getAccuracy() == SearchMatch.A_ACCURATE);
 	    	this.counter++;
+	    	this.matches.add(match);
 	    	// TODO: prevMethod is broken, though the logic is also broken
 	    	// can't find what I match against in this object, only the containing element.
 	    
-//	    	matches.add(match);
 	}
 
-//	public ArrayList<SearchMatch> getMatches(){
-//	    return matches;
-//	}
+	public void deleteMatches() {
+		this.matches.clear();
+	}
+	public ArrayList<SearchMatch> getMatches(){
+	    return matches;
+	}
 
 	public int getCounter(){
 	    return counter;

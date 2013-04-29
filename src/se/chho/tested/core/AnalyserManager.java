@@ -16,6 +16,7 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.search.IJavaSearchConstants;
 import org.eclipse.jdt.core.search.IJavaSearchScope;
 import org.eclipse.jdt.core.search.SearchEngine;
+import org.eclipse.jdt.core.search.SearchMatch;
 import org.eclipse.jdt.core.search.SearchParticipant;
 import org.eclipse.jdt.core.search.SearchPattern;
 
@@ -63,6 +64,8 @@ public class AnalyserManager implements AnalyserManagerObservableInterface {
 				}
 			  }
 		  }
+		  
+		  // TODO: Run this.runAllAnalysers here.
 	}
 	
 	@Override
@@ -143,6 +146,15 @@ public class AnalyserManager implements AnalyserManagerObservableInterface {
 				  
 				  // System.out.println(nonTestMethod.getElementName() + " found in " + testMethod.getElementName() + ": " + this.requestor.getCounter() + " times.");
 				  this.requestor.resetCounter();
+				  System.out.println(" ----- ----- ----- -----");
+				  System.out.println("Searching for \"" + nonTestMethod.getElementName() + "\" in \"" + testMethod.getElementName() + "\"");
+				  
+				  for(SearchMatch match : this.requestor.getMatches())
+				  {
+					  // TODO: Continue here
+					  // System.out.println("Offset: " + match.getOffset() + ", length " + match.getLength() + );
+				  }
+				  this.requestor.deleteMatches();
 			  }
 			  foundMethods.add(tempFoundMethod);
 		  }
