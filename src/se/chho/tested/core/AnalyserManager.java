@@ -1,7 +1,6 @@
 package se.chho.tested.core;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
@@ -20,6 +19,7 @@ import org.eclipse.jdt.core.search.SearchMatch;
 import org.eclipse.jdt.core.search.SearchParticipant;
 import org.eclipse.jdt.core.search.SearchPattern;
 
+import se.chho.tested.helpers.LinenumberHelper;
 import se.chho.tested.helpers.MarkerHelper;
 
 public class AnalyserManager implements AnalyserManagerObservableInterface {
@@ -47,19 +47,18 @@ public class AnalyserManager implements AnalyserManagerObservableInterface {
 	  
 		  for (FoundMethod foundMethod : foundMethods)
 		  {
-			  // TODO: Figure out how to show marker for all methods
 			  if (foundMethod.isInvokedByMoreThanTwoTests())
 			  {
 				  try {
 					IFile file = (IFile)foundMethod.getMethod().getCompilationUnit().getCorrespondingResource();
-					int linenumber = getMethodLineNumber(foundMethod.getMethod().getCompilationUnit(), foundMethod.getMethod());
+					int linenumber = LinenumberHelper.getMethodLineNumber(foundMethod.getMethod().getCompilationUnit(), foundMethod.getMethod());
 					String message = "Test Message " + foundMethod.getMethod().getElementName();
 					
 					// Add new marker
 					MarkerHelper.addMarker(file, linenumber, message);
 						
 				} catch (JavaModelException e) {
-					// TODO Auto-generated catch block
+					// Auto-generated catch block
 					e.printStackTrace();
 				}
 			  }
@@ -136,7 +135,9 @@ public class AnalyserManager implements AnalyserManagerObservableInterface {
 		// For each non test method, find if it's invoked in each test method one by one.
 		  for (IMethod nonTestMethod : this.nonTestMethods)
 		  {
-			  FoundMethod tempFoundMethod = new FoundMethod(nonTestMethod);
+			  
+			  FoundMethod tempFoundMethod = new FoundMethod(nonTestMethod);  
+
 			  for (IMethod testMethod : this.testMethods)
 			  {
 				  IJavaSearchScope scope = SearchEngine.createJavaSearchScope(new IJavaElement[] {testMethod});
@@ -145,16 +146,19 @@ public class AnalyserManager implements AnalyserManagerObservableInterface {
 				  tempFoundMethod.addMatch(testMethod, this.requestor.getCounter());
 				  
 				  // System.out.println(nonTestMethod.getElementName() + " found in " + testMethod.getElementName() + ": " + this.requestor.getCounter() + " times.");
-				  this.requestor.resetCounter();
+				  
 				  System.out.println(" ----- ----- ----- -----");
 				  System.out.println("Searching for \"" + nonTestMethod.getElementName() + "\" in \"" + testMethod.getElementName() + "\"");
 				  
 				  for(SearchMatch match : this.requestor.getMatches())
 				  {
 					  // TODO: Continue here
-					  // System.out.println("Offset: " + match.getOffset() + ", length " + match.getLength() + );
+					  System.out.println("Offset: " + match.getOffset() + ", length " + match.getLength() + ", Resource " + match.getResource().getName());
 				  }
+				  
+				  
 				  this.requestor.deleteMatches();
+				  this.requestor.resetCounter();
 			  }
 			  foundMethods.add(tempFoundMethod);
 		  }
@@ -175,18 +179,4 @@ public class AnalyserManager implements AnalyserManagerObservableInterface {
 	    }
 	}
 	
-	/***
-	 * Source: http://stackoverflow.com/a/562298
-	 * @param type
-	 * @param method
-	 * @return
-	 * @throws JavaModelException
-	 */
-	private int getMethodLineNumber(final ICompilationUnit compUnit, IMethod method) throws JavaModelException {
-	    String source = compUnit.getSource();
-	    String sourceUpToMethod= source.substring(0, method.getSourceRange().getOffset());
-	    Pattern lineEnd= Pattern.compile("$", Pattern.MULTILINE | Pattern.DOTALL);
-	    return lineEnd.split(sourceUpToMethod).length;
-	}
-
 }

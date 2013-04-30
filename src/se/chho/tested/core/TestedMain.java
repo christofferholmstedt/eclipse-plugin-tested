@@ -2,21 +2,26 @@ package se.chho.tested.core;
 
 import org.eclipse.jdt.core.IJavaProject;
 
+import se.chho.tested.analyser.OnlyZeroIntegerAnalyser;
+
 
 /**
- * This class goes through all test methods in given scope (usually a project not the 
- * entire eclipse workspace) and finds all methods that has been invoked by the tests.
  * 
  * @author Christoffer Holmstedt
  *
  */
 public class TestedMain {
 	
-
-	
 	public TestedMain (IJavaProject activeJavaProject)
 	{
-
+		// Step 1: Instantiate the manager
 		AnalyserManagerObservableInterface analyserManager = new AnalyserManager(activeJavaProject);
+		
+		// Step 2: Instantiate all the analysers
+		AnalyserObserverInterface onlyZeroIntegerInput = new OnlyZeroIntegerAnalyser();
+		
+		// Step 3: Attach all instantiated analysers to the manager
+		analyserManager.attach(onlyZeroIntegerInput);
+
 	}
 }
