@@ -12,10 +12,10 @@ import se.chho.tested.core.MethodInvocation;
 import se.chho.tested.helpers.LinenumberHelper;
 import se.chho.tested.helpers.MarkerHelper;
 
-public class OnlyZeroIntegerAnalyser implements AnalyserObserverInterface {
+public class EmptyStringAnalyser implements AnalyserObserverInterface {
 
 	private ArrayList<FoundMethod> methods = new ArrayList<FoundMethod>();
-	private boolean onlyZeroInputTestedAtLeastOnes = false; 
+	private boolean anyEmptyString = false; 
 	
 	@Override
 	public void runAnalysis(AnalyserManagerObservableInterface Observable) {
@@ -23,37 +23,38 @@ public class OnlyZeroIntegerAnalyser implements AnalyserObserverInterface {
 		
 		// 
 		for (FoundMethod method : methods) {
-			if (method.hasOnlyIntInput())
+			if (method.hasOnlyStringInput())
 			{
 				for (MethodInvocation methodInv : method.getMethodInvocations())
 				{
-					// Step 1: Start with the notion that all input values is expected to be zero.
-					boolean allZeroInput = true;
+					// Step 1: Start with the notion that all input values is expected other than empty strings.
+					boolean anyEmptyStringTest = false;
 							
 					// Step 2: Loop through all input parameters
-					for (Integer number : methodInv.getIntParameters())
+					for (String string : methodInv.getStringParameters())
 					{
-						// Step 3: If any value is other than zero set allZeroInput to false.
-						if (number.intValue() != 0)
+						// Step 3: If any value is empty and not null set anyEmptyStringTest to true.
+						if (string.isEmpty() && string != null)
 						{
-							allZeroInput = false;
+							anyEmptyStringTest = true;
 						}
 					}
 					// Step 4: When all input parameters have been searched for and 
-					// "allZeroInput" still is true then set class-wider variable
-					if (allZeroInput)
-						this.onlyZeroInputTestedAtLeastOnes = true;
+					// "anyEmptyStringTest" is true then set class-wider variable
+					// This is to be able to reset "anyEmptyStringTest" while looping through "MethodInv"
+					if (anyEmptyStringTest)
+						this.anyEmptyString = true;
 				}
 				
 				// Step 5: Add marker if this hasn't been tested
-				if (!this.onlyZeroInputTestedAtLeastOnes)
+				if (!this.anyEmptyString)
 				{
 					if (method.isInvokedByMoreThanTwoTests())
 					  {
 						  try {
 							IFile file = (IFile)method.getMethod().getCompilationUnit().getCorrespondingResource();
 							int linenumber = LinenumberHelper.getMethodLineNumber(method.getMethod().getCompilationUnit(), method.getMethod());
-							String message = "What happens if you test the method \"" + method.getMethod().getElementName() + "\" with only zeros as input?";
+							String message = "What happens if you test the method \"" + method.getMethod().getElementName() + "\" with an empty string as input?";
 							
 							// Add new marker
 							MarkerHelper.addMarker(file, linenumber, message);

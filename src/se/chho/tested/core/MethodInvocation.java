@@ -34,19 +34,23 @@ public class MethodInvocation {
 			String methodInvString = buf.getText(offset, length);
 			
 			ArrayList<Object> test = ParameterParserHelper.parseParameters(methodInvString);
-			Object tempObj = test.get(0);
-			if (tempObj instanceof Integer)
+			if (!test.isEmpty())
 			{
-				this.setOnlyIntInput(true);
-				for (Object tempInt : test)
-					intParameters.add(((Integer)tempInt).intValue());
-			} else if (tempObj instanceof String)
-			{
-				this.setOnlyStringInput(true);
-				for (Object tempString : test)
-					stringParameters.add(((String)tempString));
-			} else {
-				System.out.println("Type is unknown");
+				Object tempObj = test.get(0);
+						
+				if (tempObj instanceof Integer)
+				{
+					this.setOnlyIntInput(true);
+					for (Object tempInt : test)
+						intParameters.add(((Integer)tempInt).intValue());
+				} else if (tempObj instanceof String)
+				{
+					this.setOnlyStringInput(true);
+					for (Object tempString : test)
+						stringParameters.add(((String)tempString));
+				} else {
+					System.out.println("Type is unknown");
+				}
 			}
 			// TODO: get string value from offset and length
 			// TODO: split string value to parameter values.

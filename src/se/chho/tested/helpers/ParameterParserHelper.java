@@ -14,18 +14,25 @@ public class ParameterParserHelper {
 		{
 			return tempArrayList;
 		}
-		
-		// Split all commas
-		String parameters[]	= tempString.split(",");
-		
-		// Loop through all values and convert to integers
-		for (int i = 0; i < parameters.length; i++ )
+
+		if (tempString.matches("(.*)(\")(.*)"))
 		{
-			try {
-				tempArrayList.add(Integer.parseInt(parameters[i]));
-			} catch (NumberFormatException nfe)	
+			tempString = tempString.substring(1, tempString.length()-1);
+			tempArrayList.add(tempString);
+		} else {
+			
+			// Split all commas
+			String parameters[]	= tempString.split(",");
+			
+			// Loop through all values and convert to integers
+			for (int i = 0; i < parameters.length; i++ )
 			{
-				// Pass
+				try {
+					tempArrayList.add(Integer.parseInt(parameters[i]));
+				} catch (NumberFormatException nfe)	
+				{
+					// Pass
+				}
 			}
 		}
 		
