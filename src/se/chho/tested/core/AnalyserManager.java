@@ -19,9 +19,6 @@ import org.eclipse.jdt.core.search.SearchMatch;
 import org.eclipse.jdt.core.search.SearchParticipant;
 import org.eclipse.jdt.core.search.SearchPattern;
 
-import se.chho.tested.helpers.LinenumberHelper;
-import se.chho.tested.helpers.MarkerHelper;
-
 public class AnalyserManager implements AnalyserManagerObservableInterface {
 
 	// Observers (Different analysers
@@ -44,27 +41,6 @@ public class AnalyserManager implements AnalyserManagerObservableInterface {
 		{
 			// Pass
 		}
-	  
-		  for (FoundMethod foundMethod : foundMethods)
-		  {
-			  if (foundMethod.isInvokedByMoreThanTwoTests())
-			  {
-				  try {
-					IFile file = (IFile)foundMethod.getMethod().getCompilationUnit().getCorrespondingResource();
-					int linenumber = LinenumberHelper.getMethodLineNumber(foundMethod.getMethod().getCompilationUnit(), foundMethod.getMethod());
-					String message = "Test Message " + foundMethod.getMethod().getElementName();
-					
-					// Add new marker
-					MarkerHelper.addMarker(file, linenumber, message);
-						
-				} catch (JavaModelException e) {
-					// Auto-generated catch block
-					e.printStackTrace();
-				}
-			  }
-		  }
-		  
-		  // TODO: Run this.runAllAnalysers here.
 	}
 	
 	@Override
@@ -74,7 +50,7 @@ public class AnalyserManager implements AnalyserManagerObservableInterface {
 
 	@Override
 	public void attach(AnalyserObserverInterface Observer) {
-		this.observers.add(Observer);		
+		this.observers.add(Observer);
 	}
 
 	@Override
@@ -101,7 +77,7 @@ public class AnalyserManager implements AnalyserManagerObservableInterface {
 	        if(pkg.getKind() == IPackageFragmentRoot.K_SOURCE){
 	            for(ICompilationUnit unit : pkg.getCompilationUnits()){
 	            	
-	            	// TODO: Assumption Github issue gh-1
+	            	// Assumption Github issue gh-1
 	            	if (unit.getElementName().matches("(.)*Test.java"))
         			{
 	            		this.searchInCompUnits.add(unit);
@@ -142,20 +118,13 @@ public class AnalyserManager implements AnalyserManagerObservableInterface {
 			  {
 				  IJavaSearchScope scope = SearchEngine.createJavaSearchScope(new IJavaElement[] {testMethod});
 				  searchFor(nonTestMethod, scope);
-				  
-				  tempFoundMethod.addMatch(testMethod, this.requestor.getCounter());
-				  
-				  // System.out.println(nonTestMethod.getElementName() + " found in " + testMethod.getElementName() + ": " + this.requestor.getCounter() + " times.");
-				  
-				  System.out.println(" ----- ----- ----- -----");
-				  System.out.println("Searching for \"" + nonTestMethod.getElementName() + "\" in \"" + testMethod.getElementName() + "\"");
-				  
+
 				  for(SearchMatch match : this.requestor.getMatches())
-				  {
-					  // TODO: Continue here
-					  System.out.println("Offset: " + match.getOffset() + ", length " + match.getLength() + ", Resource " + match.getResource().getName());
+				  {					  
+					  tempFoundMethod.addMethodInvocation((IFile)testMethod.getResource(), testMethod, match.getOffset(), match.getLength());
 				  }
-				  
+				   
+				  tempFoundMethod.addMatch(testMethod, this.requestor.getCounter());
 				  
 				  this.requestor.deleteMatches();
 				  this.requestor.resetCounter();

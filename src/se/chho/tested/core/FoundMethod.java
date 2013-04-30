@@ -55,6 +55,14 @@ public class FoundMethod {
 	public void addMethodInvocation(IFile invokedInFile, IMethod invokedInMethod, int offset, int length)
 	{
 		MethodInvocation methodInv = new MethodInvocation(invokedInFile, invokedInMethod, offset, length);
+		
+		if (methodInv.getOnlyIntInput())
+		{
+			this.setOnlyIntInput(true);
+		} else if (methodInv.getOnlyStringInput())
+		{
+			this.setOnlyStringInput(true);
+		}
 		invokedBy.add(methodInv);
 	}
 	
@@ -112,8 +120,18 @@ public class FoundMethod {
 		this.invokedByMoreThanTwoTests = invokedByMoreThanTwoTests;
 	}
 	
+	public void setOnlyIntInput(boolean value)
+	{
+		this.onlyIntInput = value;
+	}
+	
 	public boolean hasOnlyIntInput() {
 		return this.onlyIntInput;
+	}
+	
+	public void setOnlyStringInput(boolean value)
+	{
+		this.onlyStringInput = value;
 	}
 	
 	public boolean hasOnlyStringInput() {

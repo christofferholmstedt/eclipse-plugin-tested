@@ -1,9 +1,5 @@
 package se.chho.tested.core;
 
-//import java.util.ArrayList;
-//import java.util.HashMap;
-//import java.util.Map;
-
 import java.util.ArrayList;
 
 import org.eclipse.core.runtime.CoreException;
@@ -24,8 +20,6 @@ public class TestedSearchRequestor extends SearchRequestor {
 	    if(match.getAccuracy() == SearchMatch.A_ACCURATE);
 	    	this.counter++;
 	    	this.matches.add(match);
-	    	// TODO: prevMethod is broken, though the logic is also broken
-	    	// can't find what I match against in this object, only the containing element.
 	    
 	}
 

@@ -23,5 +23,7 @@ public class TestedMain {
 		// Step 3: Attach all instantiated analysers to the manager
 		analyserManager.attach(onlyZeroIntegerInput);
 
+		// Step 4: Run everything
+		analyserManager.runAllAnalysers();
 	}
 }

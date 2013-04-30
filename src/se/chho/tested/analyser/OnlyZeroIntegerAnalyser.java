@@ -55,7 +55,7 @@ public class OnlyZeroIntegerAnalyser implements AnalyserObserverInterface {
 					  try {
 						IFile file = (IFile)method.getMethod().getCompilationUnit().getCorrespondingResource();
 						int linenumber = LinenumberHelper.getMethodLineNumber(method.getMethod().getCompilationUnit(), method.getMethod());
-						String message = "What happens if you test \"" + method.getMethod().getElementName() + "\" with only zeros as input?";
+						String message = "What happens if you test the method \"" + method.getMethod().getElementName() + "\" with only zeros as input?";
 						
 						// Add new marker
 						MarkerHelper.addMarker(file, linenumber, message);

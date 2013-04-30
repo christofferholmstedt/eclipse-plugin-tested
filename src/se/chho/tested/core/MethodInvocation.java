@@ -3,13 +3,21 @@ package se.chho.tested.core;
 import java.util.ArrayList;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jdt.core.IBuffer;
+import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IMethod;
+import org.eclipse.jdt.core.JavaCore;
+
+import se.chho.tested.helpers.ParameterParserHelper;
 
 public class MethodInvocation {
 
 	private IFile invokedInFile;
 	private IMethod invokedInMethod;
 	private int invokedAtLine;
+	private boolean onlyStringInput = false; 
+	private boolean onlyIntInput = false;
 	
 	// Assumption first iteration of this plugin only works
 	// for method calls that has only string or only int parameter values.
@@ -20,10 +28,35 @@ public class MethodInvocation {
 		this.invokedInFile = file;
 		this.invokedInMethod = method;
 		
-		// TODO: get linenumber from offset and length
-		// TODO: get string value from offset and length
-		// TODO: split string value to parameter values.
-		// TODO: Add parameter values to corresponding ArrayList (string or int)
+		try {
+			ICompilationUnit cu = JavaCore.createCompilationUnitFrom(file);
+			IBuffer buf = cu.getBuffer();
+			String methodInvString = buf.getText(offset, length);
+			
+			ArrayList<Object> test = ParameterParserHelper.parseParameters(methodInvString);
+			Object tempObj = test.get(0);
+			if (tempObj instanceof Integer)
+			{
+				this.setOnlyIntInput(true);
+				for (Object tempInt : test)
+					intParameters.add(((Integer)tempInt).intValue());
+			} else if (tempObj instanceof String)
+			{
+				this.setOnlyStringInput(true);
+				for (Object tempString : test)
+					stringParameters.add(((String)tempString));
+			} else {
+				System.out.println("Type is unknown");
+			}
+			// TODO: get string value from offset and length
+			// TODO: split string value to parameter values.
+			// TODO: Add parameter values to corresponding ArrayList (string or int)
+			
+			// TODO: get linenumber from offset and length
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public ArrayList<String> getStringParameters() {
@@ -33,8 +66,6 @@ public class MethodInvocation {
 	public ArrayList<Integer> getIntParameters() {
 		return this.intParameters;
 	}
-	
-
 	
 	public void setInvokedInFile(IFile file) {
 		this.invokedInFile = file;
@@ -58,5 +89,23 @@ public class MethodInvocation {
 	
 	public int getInvokedAtLine() {
 		return this.invokedAtLine;
+	}
+	
+	public void setOnlyIntInput(boolean value)
+	{
+		this.onlyIntInput = value;
+	}
+	
+	public boolean getOnlyIntInput() {
+		return this.onlyIntInput;
+	}
+	
+	public void setOnlyStringInput(boolean value)
+	{
+		this.onlyStringInput = value;
+	}
+	
+	public boolean getOnlyStringInput() {
+		return this.onlyStringInput;
 	}
 }
