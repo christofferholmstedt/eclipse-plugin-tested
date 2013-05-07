@@ -21,31 +21,48 @@ public class OnlyZeroIntegerAnalyser implements AnalyserObserverInterface {
 	public void runAnalysis(AnalyserManagerObservableInterface Observable) {
 		methods = Observable.getFoundMethods();
 		
-		// 
+		/**
+		 * Step 1: Loop through all non test methods
+		 */
 		for (FoundMethod method : methods) {
 			if (method.hasOnlyIntInput())
 			{
+				/**
+				 * Step 2: Loop through all method invocations for the current non test method.
+				 */
 				for (MethodInvocation methodInv : method.getMethodInvocations())
 				{
-					// Step 1: Start with the notion that all input values is expected to be zero.
+					/**
+					 * Step 3: Start with the notion that all input values is expected to be zero.
+					 */
 					boolean allZeroInput = true;
 							
-					// Step 2: Loop through all input parameters
+					/**
+					 * Step 4: Loop through all input parameters for the current method invocation
+					 */
 					for (Integer number : methodInv.getIntParameters())
 					{
-						// Step 3: If any value is other than zero set allZeroInput to false.
+						/**
+						 * Step 5: If any value is other than zero set allZeroInput to false.
+						 */
 						if (number.intValue() != 0)
 						{
 							allZeroInput = false;
 						}
 					}
-					// Step 4: When all input parameters have been searched for and 
-					// "allZeroInput" still is true then set class-wider variable
+					/**
+					 * Step 6: When all input parameters have been searched for and 
+					 * the variable "allZeroInput" still is true then set class-wider variable
+					 * can be set to true. 
+					 */
 					if (allZeroInput)
 						this.onlyZeroInputTestedAtLeastOnes = true;
 				}
 				
-				// Step 5: Add marker if this hasn't been tested
+				/**
+				 * Step 7: When all method invocations has been examined add marker if
+				 * this non test method hasn't been tested with all zero value.
+				 */
 				if (!this.onlyZeroInputTestedAtLeastOnes)
 				{
 					if (method.isInvokedByMoreThanTwoTests())
