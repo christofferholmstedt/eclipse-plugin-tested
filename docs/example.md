@@ -2,7 +2,7 @@
 layout: docs
 title: Example
 prev_section: about
-next_section: frontmatter
+next_section: downloadtheplugin
 permalink: /docs/example/
 ---
 As an example we have a simple method that takes two integers and multiplies
