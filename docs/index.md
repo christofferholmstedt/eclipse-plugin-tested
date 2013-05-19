@@ -1,68 +1,33 @@
 ---
 layout: docs
-title: Welcome
+title: About
 next_section: installation
 permalink: /docs/home/
 ---
+TestED is an ecplise plugin aimed towards helping Java developers to improve
+testing while doing test driven development. The inspiration is drawn from
+pair programming and the benefits of practicing it. As an example it's very
+easy to miss a simple test case with "null" as input when you're deep into your
+code. Simple oversights like that can easily be detected during pair
+programming or peer review of finished code, though even better would be if your
+IDE could tell you about them.
 
-This site aims to be a comprehensive guide to Jekyll. We’ll cover topics such
-as getting your site up and running, creating and managing your content,
-customizing the way your site works and looks, deploying to various
-environments, and give you some advice on participating in the future
-development of Jekyll itself.
+## How TestED works
+It's not meaningful to give developers suggestions on how to improve testing if the developer is not in
+the mindset of recieving feedback. So when is the right time?
 
-## So what is Jekyll, exactly?
+In test driven development the idea is that you first create one test case, you
+implement the code necessary to pass that test case. Then you add another test
+case as well as minimum code that makes the new test case pass. This goes on
+until the requested functionality is complete.
 
-Jekyll is a simple, blog-aware, static site generator. It takes a template
-directory containing raw text files in various formats, runs it through
-[Markdown](http://daringfireball.net/projects/markdown/) (or
-[Textile](http://textile.sitemonks.com/)) and
-[Liquid](http://wiki.shopify.com/Liquid)
-converters, and spits out a complete, ready-to-publish static website suitable
-for serving with your favorite web server. Jekyll also happens to be the engine
-behind [GitHub Pages](http://pages.github.com), which means you can use Jekyll
-to host your project’s page, blog, or website from GitHub’s servers **for
-free**.
+The best opportunity would be when the developer says "I'm done", though that
+is impossible for the software to now and we didn't want this plugin to be yet
+another software that needs to be run at the end of some development cycle. A compromise
+here is that the TestED plugin will run as soon as JUnit from within eclipse
+has finished. Suggestions or hints of improvements won't be given on functions that
+hasn't been tested at least twice already. As a last note all tests must pass
+for TestED to be executed this is because if a developer has written a test
+case and that doesn't pass yet the priority for the developer must be to solve
+that first.
 
-## Quick-start guide
-
-For the impatient, here's how to get a boilerplate Jekyll site up and running.
-
-{% highlight bash %}
-~ $ gem install jekyll
-~ $ jekyll new myblog
-~ $ cd myblog
-~/myblog $ jekyll serve
-# => Now browse to http://localhost:4000
-{% endhighlight %}
-
-That's nothing, though. The real magic happens when you start creating blog
-posts, using the front-matter to control templates and layouts, and taking
-advantage of all the awesome configuration options Jekyll makes available.
-
-## ProTips™, Notes, and Warnings
-
-Throughout this guide there are a number of small-but-handy pieces of
-information that can make using Jekyll easier, more interesting, and less
-hazardous. Here’s what to look out for.
-
-<div class="note">
-  <h5>ProTips™ help you get more from Jekyll</h5>
-  <p>These are tips and tricks that will help you be a Jekyll wizard!</p>
-</div>
-
-<div class="note info">
-  <h5>Notes are handy pieces of information</h5>
-  <p>These are for the extra tidbits sometimes necessary to understand
-     Jekyll.</p>
-</div>
-
-<div class="note warning">
-  <h5>Warnings help you not blow things up</h5>
-  <p>Be aware of these messages if you wish to avoid certain death.</p>
-</div>
-
-If you come across anything along the way that we haven’t covered, or if you
-know of a tip you think others would find handy, please [file an
-issue](https://github.com/mojombo/jekyll/issues/new) and we’ll see about
-including it in this guide.
