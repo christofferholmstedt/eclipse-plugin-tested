@@ -21,26 +21,25 @@ public class NullStringAnalyser implements AnalyserObserverInterface {
 	public void runAnalysis(AnalyserManagerObservableInterface Observable) {
 		methods = Observable.getFoundMethods();
 		
-		// 
 		for (FoundMethod method : methods) {
 			if (method.hasOnlyStringInput())
 			{
 				for (MethodInvocation methodInv : method.getMethodInvocations())
 				{
-					// Step 1: Start with the notion that all input values is expected to be zero.
+					// Step 1: Start with the notion that all input values are expected to be other than null.
 					boolean anyNullTest = false;
 							
 					// Step 2: Loop through all input parameters
 					for (String string : methodInv.getStringParameters())
 					{
-						// Step 3: If any value is other than zero set allZeroInput to false.
-						if (string == null)
+						// Step 3: If any value is null set "anyNullTest" to true
+						if (string.matches("null"))
 						{
 							anyNullTest = true;
 						}
 					}
 					// Step 4: When all input parameters have been searched for and 
-					// "allZeroInput" still is true then set class-wider variable
+					// "anyNullTest" is true then set class-wider variable
 					if (anyNullTest)
 						this.anyInputWithNull = true;
 				}

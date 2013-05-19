@@ -13,12 +13,21 @@ public class ParameterParserHelper {
 		if (tempString.isEmpty() && tempString != null)
 		{
 			return tempArrayList;
+		} 
+		
+		// Special case when input is null
+		if (tempString.matches("null")) {
+			tempArrayList.add(tempString);
+			return tempArrayList;
 		}
 
+		// If input is string value (e.g. it includes a "-character)
 		if (tempString.matches("(.*)(\")(.*)"))
 		{
 			tempString = tempString.substring(1, tempString.length()-1);
 			tempArrayList.add(tempString);
+			
+		// If input is integer value
 		} else {
 			
 			// Split all commas

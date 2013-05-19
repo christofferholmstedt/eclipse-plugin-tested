@@ -20,8 +20,7 @@ public class EmptyStringAnalyser implements AnalyserObserverInterface {
 	@Override
 	public void runAnalysis(AnalyserManagerObservableInterface Observable) {
 		methods = Observable.getFoundMethods();
-		
-		// 
+
 		for (FoundMethod method : methods) {
 			if (method.hasOnlyStringInput())
 			{
