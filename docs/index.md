@@ -1,8 +1,8 @@
 ---
 layout: docs
-title: About
-next_section: installation
-permalink: /docs/home/
+title: Welcome
+next_section: example
+permalink: /docs/about/
 ---
 TestED is an ecplise plugin aimed towards helping Java developers to improve
 testing while doing test driven development. The inspiration is drawn from
@@ -11,6 +11,9 @@ easy to miss a simple test case with "null" as input when you're deep into your
 code. Simple oversights like that can easily be detected during pair
 programming or peer review of finished code, though even better would be if your
 IDE could tell you about them.
+
+TestED eclipse plugin is as of may 2013 a proof of concept working on simple
+scenarios with only strings or integers as method input parameters.
 
 ## How TestED works
 It's not meaningful to give developers suggestions on how to improve testing if the developer is not in
@@ -31,3 +34,49 @@ for TestED to be executed this is because if a developer has written a test
 case and that doesn't pass yet the priority for the developer must be to solve
 that first.
 
+## Who is TestED for?
+As it still proof of concept, TestED is for developers that are interested in
+testing and how it can help other developers develop better software.
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Requirement</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <p><code>Java</code></p>
+      </td>
+      <td>
+        <p>
+            TestED is developed to work with Java code, nothing else.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p><code>Eclipse</code></p>
+      </td>
+      <td>
+        <p>
+            TestED is an eclipse plugin.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p><code>JUnit</code></p>
+      </td>
+      <td>
+        <p>
+            TestED requires JUnit to be run from within Eclipse.
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+Continue to next section for an example on what kind of hints you get.
