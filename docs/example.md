@@ -14,17 +14,18 @@ public int calculate(int x, int y) {
 }
 {% endhighlight %}
 
-As first step in TDD we created a simple test case.
+As part of the TDD process before creating the calculate method two test cases
+were written. The first one testing single digits.
 {% highlight yaml %}
 assertTrue(4 == calculate(2, 2));
 {% endhighlight %}
 
-Next test case was two digits in both position.
+The second test case testing two digits integers.
 {% highlight yaml %}
 assertTrue(100 == calculate(10,10));
 {% endhighlight %}
 
-It's now TestED eclipse plugin kicks in when the developer got two passing test
+It's now the TestED eclipse plugin kicks in when the developer got two passing test
 for one method, in this case the method "calculate". In the Problems tab within
 eclipse a few hints are given, here are some examples.
 {% highlight yaml %}
