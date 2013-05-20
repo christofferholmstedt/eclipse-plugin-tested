@@ -21,7 +21,7 @@ import org.eclipse.jdt.core.search.SearchPattern;
 
 public class AnalyserManager implements AnalyserManagerObservableInterface {
 
-	// Observers (Different analysers
+	// Observers (Different analysers)
 	private ArrayList<AnalyserObserverInterface> observers = new ArrayList<AnalyserObserverInterface>();
 	
 	// Search objects
@@ -55,7 +55,7 @@ public class AnalyserManager implements AnalyserManagerObservableInterface {
 
 	@Override
 	public void detach(AnalyserObserverInterface Observer) {
-		// TODO: Make sure this works.
+		// TODO: Make sure this works if needed.
 		this.observers.remove(Observer);
 	}
 
