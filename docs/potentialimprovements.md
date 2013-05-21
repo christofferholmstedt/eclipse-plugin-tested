@@ -31,3 +31,8 @@ of analysers the performance will drastically become worse.
 
 I believe there must be a better solution for how each analysis is done while
 keeping different analysis separate.
+
+### Testing
+This eclipse plugin is all about testing but no testing has been done during
+this project. This is a must if more advanced functionality is planned for the
+future.
