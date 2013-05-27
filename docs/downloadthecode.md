@@ -20,10 +20,6 @@ Depending on which eclipse version you have installed you may have to install
 the [Plug-in Development Environment (PDE)](http://www.eclipse.org/pde/). This could easily be done from
 witihin eclipse and the "Install New Software..." option.
 
-You should now be able to open the plugin project in Eclipse and run it as an
-Eclipse application. Another Eclipse instance will now open with the TestED
-plugin started.
-
 Here is a quick walkthrough on how to get it to run. Lines that should be executed from the
 command line start with the $-sign.
 {% highlight yaml %}
@@ -34,3 +30,7 @@ Open Eclipse and set <directory_for_development> as workspace.
 In the project explorer import the eclipse-plugin-tested project into
 workspace.
 {% endhighlight %}
+
+You should now be able to open the plugin project in Eclipse and run it as an
+"Eclipse application". Another Eclipse instance will now start with the TestED
+plugin activated.
