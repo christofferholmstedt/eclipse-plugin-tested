@@ -11,9 +11,12 @@ import se.chho.tested.core.TestedMain;
 import se.chho.tested.helpers.MarkerHelper;
 
 /**
+ * TestRunListener, this is where TestED plugin listens to all test cases
+ * and fetches the information if a test case has passed or failed.
+ * 
+ * It's also here that TestED plugin is started.
  * @author Christoffer Holmstedt
  */
-
 public class TestedTestRunListener extends TestRunListener {
 	
 	private boolean allTestPassed = true;

@@ -11,6 +11,15 @@ import org.eclipse.jdt.core.JavaCore;
 
 import se.chho.tested.helpers.ParameterParserHelper;
 
+/**
+ * A method invocation is an invocation in a test case.
+ * 
+ * A method invocation is "fetched" as a string from a string buffer using 
+ * offset and length. This string is then parsed into an integer or string.
+ * 
+ * @author Christoffer Holmstedt
+ *
+ */
 public class MethodInvocation {
 
 	private IFile invokedInFile;
@@ -52,10 +61,7 @@ public class MethodInvocation {
 					System.out.println("Type is unknown");
 				}
 			}
-			// TODO: get string value from offset and length
-			// TODO: split string value to parameter values.
-			// TODO: Add parameter values to corresponding ArrayList (string or int)
-			
+
 			// TODO: get linenumber from offset and length
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block

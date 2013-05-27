@@ -10,6 +10,15 @@ import org.eclipse.jdt.core.IMethod;
 
 import se.chho.tested.helpers.LinenumberHelper;
 
+/**
+ * A FoundMethod is a non test method that has matching test cases,
+ * or in other words, a mapping between all method invocations in test cases 
+ * to the non test method.
+ * 
+ * Each FoundMethod stores information about all method invocations.
+ * @author Christoffer Holmstedt
+ *
+ */
 public class FoundMethod {
 	
 	private IMethod method;
@@ -56,6 +65,7 @@ public class FoundMethod {
 	{
 		MethodInvocation methodInv = new MethodInvocation(invokedInFile, invokedInMethod, offset, length);
 		
+		// Determine if the method invocation is only string or only integers.
 		if (methodInv.getOnlyIntInput())
 		{
 			this.setOnlyIntInput(true);

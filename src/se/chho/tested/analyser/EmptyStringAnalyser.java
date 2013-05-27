@@ -12,6 +12,12 @@ import se.chho.tested.core.MethodInvocation;
 import se.chho.tested.helpers.LinenumberHelper;
 import se.chho.tested.helpers.MarkerHelper;
 
+/**
+ * Analyser that checks whether a function with string input has a test case 
+ * where a empty string is tested.
+ * 
+ * @author Christoffer Holmstedt
+ */
 public class EmptyStringAnalyser implements AnalyserObserverInterface {
 
 	private ArrayList<FoundMethod> methods = new ArrayList<FoundMethod>();

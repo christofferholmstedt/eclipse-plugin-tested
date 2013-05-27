@@ -2,6 +2,12 @@ package se.chho.tested.helpers;
 
 import java.util.ArrayList;
 
+/**
+ * Parse method invocations as string into valuable information about the input values and types.
+ * 
+ * @author Christoffer Holmstedt
+ *
+ */
 public class ParameterParserHelper {
 	
 	public static ArrayList<Object> parseParameters(String string)

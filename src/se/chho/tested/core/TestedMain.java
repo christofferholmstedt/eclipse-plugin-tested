@@ -12,7 +12,11 @@ import se.chho.tested.analyser.OnlyZeroIntegerAnalyser;
 
 
 /**
+ * This class is where the mapping from AnalyserManager and each Analyser takes place.
  * 
+ * The AnalyserManager is the obsverable object in the observer pattern. Each 
+ * Analayser is a observer. They are all run when "runAllAnalysers()" is executed.
+ *  
  * @author Christoffer Holmstedt
  *
  */

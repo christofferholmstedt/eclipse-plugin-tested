@@ -6,6 +6,13 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.search.SearchMatch;
 import org.eclipse.jdt.core.search.SearchRequestor;
 
+/**
+ * The search requestor counts how many matches a search finds in a search and collects
+ * all matches.
+ * 
+ * @author Christoffer Holmstedt
+ *
+ */
 public class TestedSearchRequestor extends SearchRequestor {
 	private ArrayList<SearchMatch> matches;
 	private int counter = 0;

@@ -6,7 +6,13 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
 
-	public class LinenumberHelper {
+/**
+ * Helper class to find starting line number of a method within a file. 
+ * 
+ * @author Christoffer Holmstedt
+ *
+ */
+public class LinenumberHelper {
 	
 		/***
 	 * Source: http://stackoverflow.com/a/562298

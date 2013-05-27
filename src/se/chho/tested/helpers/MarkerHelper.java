@@ -5,6 +5,14 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 
+/**
+ * Helper class to make it easier to add "Passed Test" markers.
+ * A marker within Eclipse is e.g. a line number marker or text marker.
+ * All problem markers gets automatically added to the problems tab within Eclipse.
+ * 
+ * @author Christoffer Holmstedt
+ *
+ */
 public class MarkerHelper {
 	
 	// The passed test marker ID

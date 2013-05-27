@@ -11,7 +11,12 @@ import se.chho.tested.core.FoundMethod;
 import se.chho.tested.core.MethodInvocation;
 import se.chho.tested.helpers.LinenumberHelper;
 import se.chho.tested.helpers.MarkerHelper;
-
+/**
+ * Analyser that checks whether a function with integer input has a test case 
+ * where maximum integer is tested as the only input value.
+ * 
+ * @author Christoffer Holmstedt
+ */
 public class OnlyMaximumIntegerAnalyser implements AnalyserObserverInterface {
 
 	private ArrayList<FoundMethod> methods = new ArrayList<FoundMethod>();

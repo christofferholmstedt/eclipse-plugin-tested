@@ -19,6 +19,14 @@ import org.eclipse.jdt.core.search.SearchMatch;
 import org.eclipse.jdt.core.search.SearchParticipant;
 import org.eclipse.jdt.core.search.SearchPattern;
 
+/**
+ * AnalyserManager takes care of launching and managing the parsing process.
+ * First classes are divided between test-classes and implementation class in processProject().
+ * Next step is to populate the array FoundMethods with information about all method invocations,
+ * it's this array that is later on iterated over from each analyser.
+ * 
+ * @author Christoffer Holmstedt
+ */
 public class AnalyserManager implements AnalyserManagerObservableInterface {
 
 	// Observers (Different analysers)
@@ -68,7 +76,7 @@ public class AnalyserManager implements AnalyserManagerObservableInterface {
 	}
 	
 	/**
-	 * Source: http://stackoverflow.com/questions/11321363/alternative-or-improvement-to-eclipse-jdt-searchengine
+	 * Inpspiration from: http://stackoverflow.com/questions/11321363/alternative-or-improvement-to-eclipse-jdt-searchengine
 	 * @param javaProject
 	 * @throws JavaModelException
 	 */
@@ -114,18 +122,24 @@ public class AnalyserManager implements AnalyserManagerObservableInterface {
 			  
 			  FoundMethod tempFoundMethod = new FoundMethod(nonTestMethod);  
 
+			  // Looping through test methods.
 			  for (IMethod testMethod : this.testMethods)
 			  {
+				  // Set scope for each search to be the test method currently iterating over.
 				  IJavaSearchScope scope = SearchEngine.createJavaSearchScope(new IJavaElement[] {testMethod});
 				  searchFor(nonTestMethod, scope);
 
+				  // Search result are automatically added to the this.requestor which
+				  // can be iterated over.
 				  for(SearchMatch match : this.requestor.getMatches())
 				  {					  
+					  // Each match is then added as a method invocation to the current "FoundMethod" object.
 					  tempFoundMethod.addMethodInvocation((IFile)testMethod.getResource(), testMethod, match.getOffset(), match.getLength());
 				  }
-				   
+				  
 				  tempFoundMethod.addMatch(testMethod, this.requestor.getCounter());
 				  
+				  // Clear the requestor when going for the next test method (changing scope in the search).
 				  this.requestor.deleteMatches();
 				  this.requestor.resetCounter();
 			  }
@@ -142,6 +156,7 @@ public class AnalyserManager implements AnalyserManagerObservableInterface {
 	    SearchPattern pattern = SearchPattern.createPattern(elem, IJavaSearchConstants.REFERENCES);
 	    SearchEngine searchEngine = new SearchEngine();
 	    try{
+	    	// This is where the actual search is initialised
 	        searchEngine.search(pattern, new SearchParticipant[] {SearchEngine.getDefaultSearchParticipant()}, scope, requestor, null);
 	    }catch(CoreException e){
 	        e.printStackTrace();
