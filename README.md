@@ -7,7 +7,7 @@ at least two tests that passes for each corresponding method.
 
 TestED is developed as a project in the course "CDT412 - Software Engineering
 Project" at Mälardalen University in Sweden. For more information please visit
-the webpage at http://christofferholmstedt.github.io/eclipse-project-tested.
+the webpage at http://christofferholmstedt.github.io/eclipse-plugin-tested.
 
 License
 -------
